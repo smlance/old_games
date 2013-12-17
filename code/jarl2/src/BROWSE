@@ -1,0 +1,303 @@
+[ebrowse-hs "ebrowse 5.0" " -x" () ()][ebrowse-ts [ebrowse-cs "Tile_Link" () 0"ent.h" "struct Tile_Link
+{" 1147() ]
+()([ebrowse-ms "entity" () 0 () "	Entity * 	entity;" 1166 0  () () 0]
+[ebrowse-ms "next_link" () 0 () "	Tile_Link * next_link;" 1190 0  () () 0]
+)
+()
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Camera" () 0"disp.h" "class Camera
+{" 967"cam.cpp" ]
+()([ebrowse-ms "viewer" () 0 () "	Rect 	viewer;" 991 2  () () 0]
+)
+([ebrowse-ms "Camera" () 0 () "	Camera();" 1010 0  () "Camera::Camera()
+{" 35]
+[ebrowse-ms "getViewer" () 0 () "	Rect *getViewer()" 1080 0  () "Rect *Camera::getViewer()" 300]
+[ebrowse-ms "init" () 0 () "	void init()" 1036 0  () "void Camera::init()" 85]
+[ebrowse-ms "setPos" () 0 () "	void setPos(int" 1054 0  () "void Camera::setPos(int" 229]
+[ebrowse-ms "~Camera" () 0 () "	~Camera()" 1022 0  () "Camera::~Camera()" 59]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Entity" () 0"ent.h" "class Entity
+{" 43"ent.cpp" ]
+([ebrowse-ts [ebrowse-cs "Player" () 0"ent.h" "class Player :" 956"play.cpp" ]
+()()
+([ebrowse-ms "Player" () 0 () "	Player(int, int, int);" 1002 0  () "Player::Player(int x_, int y_, int id_) :" 37]
+[ebrowse-ms "checkHit" () 0 () "	void checkHit()" 1098 0  () "void Player::checkHit()" 2375]
+[ebrowse-ms "move" () 1 () "	void move(int" 1060 0  () "void Player::move(int" 553]
+[ebrowse-ms "randSpawn" () 1 () "	void randSpawn()" 1080 0  () "void Player::randSpawn()" 1824]
+[ebrowse-ms "update" () 1 () "	void update(int" 1043 0  () "void Player::update(int" 145]
+[ebrowse-ms "~Player" () 0 () "	~Player()" 1025 0  () "Player::~Player()" 115]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Tile" () 0"ent.h" "class Tile :" 1207"tile.cpp" ]
+()([ebrowse-ms "entity_list" () 0 () "	svector <Entity *> entity_list;" 1265 2  () () 0]
+[ebrowse-ms "projected_ent_occupants" () 0 () "	int projected_ent_occupants;" 1295 2  () () 0]
+)
+([ebrowse-ms "Tile" () 0 () "	Tile(int, int, int);" 1314 0  () "Tile::Tile(int x_, int y_, int id_) :" 33]
+[ebrowse-ms "addEntity" () 0 () "	void 	addEntity(Entity" 1427 0  () "void Tile::addEntity(Entity" 1675]
+[ebrowse-ms "freeEnt" () 0 () "	void	freeEnt()" 1583 0  () "void Tile::freeEnt()" 2090]
+[ebrowse-ms "getEnt" () 0 () "	Entity *getEnt(int" 1525 0  () "Entity *Tile::getEnt(int" 1213]
+[ebrowse-ms "getEntListSize" () 0 () "	int 	getEntListSize()" 1607 0  () "int Tile::getEntListSize()" 1614]
+[ebrowse-ms "getPEO" () 0 () "	int		getPEO()" 1504 0  () "int Tile::getPEO()" 857]
+[ebrowse-ms "getVisible" () 0 () "	bool	getVisible()" 1651 0  () "bool Tile::getVisible()" 551]
+[ebrowse-ms "hasDoor" () 0 () "	bool 	hasDoor()" 1448 0  () "bool Tile::hasDoor()" 2557]
+[ebrowse-ms "hasEnt" () 0 () "	bool 	hasEnt()" 1543 0  () "bool Tile::hasEnt()" 1269]
+[ebrowse-ms "incrementPEO" () 0 () "	void 	incrementPEO()" 1471 0  () "void Tile::incrementPEO()" 749]
+[ebrowse-ms "init" () 1 () "	void 	init(bool" 1353 0  () "void Tile::init(bool" 657]
+[ebrowse-ms "removeEnt" () 0 () "	void 	removeEnt(int" 1565 0  () "void Tile::removeEnt(int" 1976]
+[ebrowse-ms "setID" () 1 () "	void 	setID(int" 1401 0  () "void Tile::setID(int" 916]
+[ebrowse-ms "setSolidById" () 0 () "	void 	setSolidById()" 1383 0  () "void Tile::setSolidById()" 990]
+[ebrowse-ms "setVisible" () 0 () "	void	setVisible(bool" 1630 0  () "void Tile::setVisible(bool" 600]
+[ebrowse-ms "zeroPEO" () 0 () "	void	zeroPEO()" 1488 0  () "void Tile::zeroPEO()" 803]
+[ebrowse-ms "~Tile" () 0 () "	~Tile()" 1335 0  () "Tile::~Tile()" 354]
+)
+()
+()
+()
+()
+()()
+])([ebrowse-ms "def" () 0 () "	int		hp, atk, def;" 427 0  () () 0]
+[ebrowse-ms "time_m" () 0 () "	int 	x, y, id, type, time_a, time_m;" 217 1  () () 0]
+[ebrowse-ms "visible" () 0 () "	bool 	solid, in_room, visible;" 249 1  () () 0]
+)
+([ebrowse-ms "Entity" () 0 () "	Entity(int, int, int);" 270 0  () "Entity::Entity(int x_, int y_, int id_)
+{" 37]
+[ebrowse-ms "getID" () 0 () "	int 	getID()" 453 0  () "int Entity::getID()" 253]
+[ebrowse-ms "getInRoom" () 0 () "	bool	getInRoom()" 569 0  () "bool Entity::getInRoom()" 405]
+[ebrowse-ms "getSolid" () 0 () "	bool	getSolid()" 550 0  () "bool Entity::getSolid()" 361]
+[ebrowse-ms "getX" () 0 () "	int 	getX()" 467 0  () "int Entity::getX()" 288]
+[ebrowse-ms "getY" () 0 () "	int 	getY()" 481 0  () "int Entity::getY()" 322]
+[ebrowse-ms "inPlayerLOS" () 0 () "	bool	inPlayerLOS()" 612 0  () "bool Entity::inPlayerLOS()" 1135]
+[ebrowse-ms "init" () 1 () "	virtual void init(bool" 397 0  () "void Entity::init(bool" 1028]
+[ebrowse-ms "move" () 1 () "	virtual void move(int" 344 0  () "void Entity::move(int" 1581]
+[ebrowse-ms "moveEnt" () 0 () "	void	moveEnt(int" 633 0  () "void Entity::moveEnt(int" 2916]
+[ebrowse-ms "randSpawn" () 1 () "	virtual void randSpawn()" 372 0  () "void Entity::randSpawn()" 3021]
+[ebrowse-ms "setID" () 1 () "	virtual void 	setID(int" 677 0  () "void Entity::setID(int" 461]
+[ebrowse-ms "setInRoom" () 0 () "	void			setInRoom(bool" 726 0  () "void Entity::setInRoom(bool" 817]
+[ebrowse-ms "setSolid" () 0 () "	void			setSolid(bool" 701 0  () "void Entity::setSolid(bool" 760]
+[ebrowse-ms "setStatsById" () 0 () "	void			setStatsById(int" 753 0  () "void Entity::setStatsById(int" 508]
+[ebrowse-ms "update" () 1 () "	virtual void update(int" 319 0  () "void Entity::update(int" 1242]
+[ebrowse-ms "~Entity" () 0 () "	~Entity()" 293 0  () "Entity::~Entity()" 217]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Map" () 0"map.h" "class Map
+{" 40"map.cpp" ]
+()([ebrowse-ms "map" () 0 () "	svector < svector <Tile *> > map;" 84 2  () () 0]
+)
+([ebrowse-ms "Map" () 0 () "	Map();" 100 0  () "Map::Map() {" 29]
+[ebrowse-ms "addDoors" () 0 () "	void addDoors()" 269 0  () "void Map::addDoors()" 6478]
+[ebrowse-ms "addExit" () 0 () "	void addExit()" 360 0  () "void Map::addExit()" 9993]
+[ebrowse-ms "addMaze" () 0 () "	void addMaze()" 176 0  () "void Map::addMaze()" 984]
+[ebrowse-ms "addRand" () 0 () "	void addRand()" 251 0  () "void Map::addRand()" 7336]
+[ebrowse-ms "addRooms" () 0 () "	void addRooms()" 194 0  () "void Map::addRooms()" 5122]
+[ebrowse-ms "build" () 0 () "	void build()" 138 0  () "void Map::build()" 422]
+[ebrowse-ms "deadEndsExist" () 0 () "	bool deadEndsExist()" 343 0  () "bool Map::deadEndsExist()" 7869]
+[ebrowse-ms "getHeight" () 0 () "	int 	getHeight()" 407 0  () "int Map::getHeight()" 331]
+[ebrowse-ms "getTile" () 0 () "	Tile *	getTile(int" 382 0  () "Tile *Map::getTile(int" 276]
+[ebrowse-ms "getWidth" () 0 () "	int 	getWidth()" 425 0  () "int Map::getWidth()" 379]
+[ebrowse-ms "init" () 0 () "	void init()" 123 0  () "void Map::init()" 619]
+[ebrowse-ms "removeDeadEnds" () 0 () "	void removeDeadEnds()" 320 0  () "void Map::removeDeadEnds()" 8357]
+[ebrowse-ms "removeDoubleDoors" () 0 () "	void removeDoubleDoors()" 296 0  () "void Map::removeDoubleDoors()" 9582]
+[ebrowse-ms "~Map" () 0 () "	~Map()" 109 0  () "Map::~Map()" 45]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Display" () 0"disp.h" "class Display
+{" 46"disp.cpp" ]
+()([ebrowse-ms "font_list" () 0 () "	svector<Font *>		font_list;" 135 2  () () 0]
+[ebrowse-ms "img_list" () 0 () "	svector<Surface *>	img_list;" 106 2  () () 0]
+[ebrowse-ms "window" () 0 () "	Surface *			window;" 76 2  () () 0]
+)
+([ebrowse-ms "Display" () 0 () "	Display();" 155 0  () "Display::Display()
+{" 37]
+[ebrowse-ms "applySurface" () 0 () "	void 	applySurface(int" 424 0  () "void Display::applySurface(int" 2269]
+[ebrowse-ms "applySurface" () 0 () "	void 	applySurface(int" 374 0  () "void Display::applySurface(int" 2093]
+[ebrowse-ms "concatenateString" () 0 () "	sstring	concatenateString(int" 547 0  () "sstring Display::concatenateString(int" 2899]
+[ebrowse-ms "getPixel32" () 0 () "	Uint32 	getPixel32(int" 279 0  () "Uint32 Display::getPixel32(int" 517]
+[ebrowse-ms "init" () 0 () "	void 	init()" 183 0  () "void Display::init()" 654]
+[ebrowse-ms "initFonts" () 0 () "	void	initFonts()" 202 0  () "void Display::initFonts()" 1996]
+[ebrowse-ms "intToConstChar" () 0 () "	const char *intToConstChar(int" 586 0  () "const char *Display::intToConstChar(int" 5934]
+[ebrowse-ms "loadGfx" () 0 () "	void 	loadGfx()" 220 0  () "void Display::loadGfx()" 6933]
+[ebrowse-ms "loadImg" () 0 () "	Surface *loadImg(sstring" 487 0  () "Surface *Display::loadImg(sstring" 6282]
+[ebrowse-ms "refresh" () 0 () "	void 	refresh()" 238 0  () "void Display::refresh()" 462]
+[ebrowse-ms "render" () 0 () "	void	render()" 254 0  () "void Display::render()" 3117]
+[ebrowse-ms "updateCam" () 0 () "	void	updateCam(int" 509 0  () "void Display::updateCam(int" 1020]
+[ebrowse-ms "~Display" () 0 () "	~Display()" 168 0  () "Display::~Display()" 63]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Clock" () 0"clock.h" "class Clock
+{" 46"clock.cpp" ]
+()([ebrowse-ms "time_init" () 0 () "	int time_init;" 71 2  () () 0]
+)
+([ebrowse-ms "Clock" () 0 () "	Clock();" 89 0  () "Clock::Clock()
+{" 33]
+[ebrowse-ms "getTimeElapsed" () 0 () "	int getTimeElapsed()" 138 0  () "int Clock::getTimeElapsed()" 158]
+[ebrowse-ms "start" () 0 () "	void start()" 115 0  () "void Clock::start()" 96]
+[ebrowse-ms "~Clock" () 0 () "	~Clock()" 100 0  () "Clock::~Clock()" 70]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Game" () 0"game.h" "class Game
+{" 43"game.cpp" ]
+()([ebrowse-ms "area" () 0 () "	Map *				area;" 115 2  () () 0]
+[ebrowse-ms "ent_list" () 0 () "	svector <Entity *> 	ent_list;" 99 2  () () 0]
+[ebrowse-ms "state" () 0 () "	int 				state;" 68 2  () () 0]
+)
+([ebrowse-ms "Game" () 0 () "	Game();" 132 0  () "Game::Game() {" 31]
+[ebrowse-ms "checkPlayerMove" () 0 () "	void 	checkPlayerMove(Key" 354 0  () "void Game::checkPlayerMove(Key" 1730]
+[ebrowse-ms "generatePlayerLOS" () 0 () "	void 	generatePlayerLOS()" 618 0  () "void Game::generatePlayerLOS()" 4153]
+[ebrowse-ms "getArea" () 0 () "	Map *	getArea()" 256 0  () "Map *	Game::getArea()" 195]
+[ebrowse-ms "getEnt" () 0 () "	Entity *getEnt(int" 301 0  () "Entity *Game::getEnt(int" 295]
+[ebrowse-ms "getEntListSize" () 0 () "	int 	getEntListSize()" 280 0  () "int 	Game::getEntListSize()" 241]
+[ebrowse-ms "getState" () 0 () "	int getState()" 204 0  () "int		Game::getState()" 345]
+[ebrowse-ms "init" () 0 () "	void init()" 156 0  () "void Game::init()" 426]
+[ebrowse-ms "initRandEnts" () 0 () "	void 	initRandEnts()" 326 0  () "void Game::initRandEnts()" 1303]
+[ebrowse-ms "numGroundsUDLR" () 0 () "	int		numGroundsUDLR(int" 452 0  () "int Game::numGroundsUDLR(int" 3241]
+[ebrowse-ms "numUDLRAdjInRoom" () 0 () "	bool	numUDLRAdjInRoom(int" 486 0  () "bool Game::numUDLRAdjInRoom(int" 3704]
+[ebrowse-ms "numWallsAll" () 0 () "	int		numWallsAll(int" 552 0  () () 0]
+[ebrowse-ms "numWallsUDLR" () 0 () "	int		numWallsUDLR(int" 379 0  () "int Game::numWallsUDLR(int" 2651]
+[ebrowse-ms "setState" () 0 () "	void setState(int" 236 0  () "void	Game::setState(int" 388]
+[ebrowse-ms "update" () 0 () "	void update(int" 174 0  () "void Game::update(int" 858]
+[ebrowse-ms "~Game" () 0 () "	~Game()" 142 0  () "Game::~Game()" 49]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Font" () 0"disp.h" "class Font
+{" 780"font.cpp" ]
+()([ebrowse-ms "chars" () 0 () "	svector <Rect>		chars;" 832 2  () () 0]
+[ebrowse-ms "font" () 0 () "	Surface *			font;" 808 2  () () 0]
+[ebrowse-ms "space" () 0 () "	int 				new_line, space;" 858 2  () () 0]
+)
+([ebrowse-ms "Font" () 0 () "	Font();" 875 0  () "Font::Font() 	{" 31]
+[ebrowse-ms "dispText" () 0 () "	void 	dispText(int" 932 0  () "void Font::dispText(int" 204]
+[ebrowse-ms "loadFont" () 0 () "	void 	loadFont(sstring" 910 0  () "void Font::loadFont(sstring" 1125]
+[ebrowse-ms "~Font" () 0 () "	~Font()" 885 0  () "Font::~Font()" 50]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Handler" () 0"handler.h" "class Handler
+{" 52"handler.cpp" ]
+()()
+([ebrowse-ms "Handler" () 0 () "	Handler();" 81 0  () "Handler::Handler() {" 37]
+[ebrowse-ms "handle" () 0 () "	void handle(Event" 114 0  () "void Handler::handle(Event" 93]
+[ebrowse-ms "~Handler" () 0 () "	~Handler()" 94 0  () "Handler::~Handler()" 61]
+)
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "*Globals*" () 0() () 0"clock.h" ]
+()([ebrowse-ms "camera" () 0 () () 0 0  "main.cpp" "Camera	camera;" 152]
+[ebrowse-ms "display" () 0 () () 0 0  "main.cpp" "Display display;" 137]
+[ebrowse-ms "event" () 0 () () 0 0  "main.cpp" "Event 	event;" 195]
+[ebrowse-ms "fps" () 0 () () 0 0  "main.cpp" "Clock	fps;" 206]
+[ebrowse-ms "game" () 0 () () 0 0  "main.cpp" "Game 	game;" 164]
+[ebrowse-ms "handler" () 0 () () 0 0  "main.cpp" "Handler handler;" 181]
+[ebrowse-ms "update" () 0 () () 0 0  "main.cpp" "Clock	update;" 220]
+)
+([ebrowse-ms "init" () 0 "main.cpp" "void init()" 233 0  "main.cpp" "void init()" 233]
+[ebrowse-ms "loop" () 0 "main.cpp" "void loop()" 355 0  "main.cpp" "void loop()" 355]
+[ebrowse-ms "main" () 0 "main.cpp" "int main(int" 885 0  "main.cpp" "int main(int" 885]
+[ebrowse-ms "quit" () 0 "main.cpp" "void quit()" 866 0  "main.cpp" "void quit()" 866]
+)
+()
+()
+([ebrowse-ms "BLACK_SPACE" () 512 () () 0 0  "main.h" "#define BLACK_SPACE	" 1832]
+[ebrowse-ms "CLOCK_H" () 512 () () 0 0  () "#define CLOCK_H
+" 32]
+[ebrowse-ms "DISP_H" () 512 () () 0 0  "disp.h" "#define DISP_H
+" 30]
+[ebrowse-ms "DOOR_CLOSED_GRAY" () 512 () () 0 0  "main.h" "#define DOOR_CLOSED_GRAY	" 1983]
+[ebrowse-ms "DOOR_OPEN_GRAY" () 512 () () 0 0  "main.h" "#define DOOR_OPEN_GRAY	" 2010]
+[ebrowse-ms "DUNGEON_GRAY" () 512 () () 0 0  "main.h" "#define DUNGEON_GRAY	" 1763]
+[ebrowse-ms "ENT_H" () 512 () () 0 0  "ent.h" "#define ENT_H
+" 28]
+[ebrowse-ms "Event" () 512 () () 0 0  "main.h" "#define Event " 718]
+[ebrowse-ms "FPS" () 512 () () 0 0  "main.h" "#define FPS	" 1477]
+[ebrowse-ms "GAME_H" () 512 () () 0 0  "game.h" "#define GAME_H
+" 30]
+[ebrowse-ms "GAME_HEIGHT" () 512 () () 0 0  "main.h" "#define GAME_HEIGHT	" 1025]
+[ebrowse-ms "GAME_WIDTH" () 512 () () 0 0  "main.h" "#define GAME_WIDTH	" 1000]
+[ebrowse-ms "GFX_H" () 512 () () 0 0  "gfx.h" "#define GFX_H
+" 28]
+[ebrowse-ms "GFX_PATH" () 512 () () 0 0  "main.h" "#define GFX_PATH	" 1500]
+[ebrowse-ms "GROUND_GRAY" () 512 () () 0 0  "main.h" "#define GROUND_GRAY	" 1952]
+[ebrowse-ms "HANDLER_H" () 512 () () 0 0  "handler.h" "#define HANDLER_H
+" 36]
+[ebrowse-ms "ITEM" () 512 () () 0 0  "main.h" "#define ITEM	" 1670]
+[ebrowse-ms "Key" () 512 () () 0 0  "main.h" "#define Key	" 797]
+[ebrowse-ms "MAIN_H" () 512 () () 0 0  "main.h" "#define MAIN_H
+" 30]
+[ebrowse-ms "MAP_COLS" () 512 () () 0 0  "main.h" "#define MAP_COLS	" 1270]
+[ebrowse-ms "MAP_H" () 512 () () 0 0  "map.h" "#define MAP_H
+" 28]
+[ebrowse-ms "MAP_ROWS" () 512 () () 0 0  "main.h" "#define MAP_ROWS	" 1238]
+[ebrowse-ms "MOB" () 512 () () 0 0  "main.h" "#define MOB	" 1651]
+[ebrowse-ms "MOVE_DOWN" () 512 () () 0 0  "main.h" "#define MOVE_DOWN	" 2063]
+[ebrowse-ms "MOVE_LEFT" () 512 () () 0 0  "main.h" "#define MOVE_LEFT	" 2084]
+[ebrowse-ms "MOVE_RIGHT" () 512 () () 0 0  "main.h" "#define MOVE_RIGHT	" 2106]
+[ebrowse-ms "MOVE_UP" () 512 () () 0 0  "main.h" "#define MOVE_UP	" 2041]
+[ebrowse-ms "PLAYER" () 512 () () 0 0  "main.h" "#define PLAYER	" 1853]
+[ebrowse-ms "RAT" () 512 () () 0 0  "main.h" "#define RAT	" 1871]
+[ebrowse-ms "Rect" () 512 () () 0 0  "main.h" "#define Rect	" 774]
+[ebrowse-ms "SCREEN_BUFFER_X" () 512 () () 0 0  "main.h" "#define SCREEN_BUFFER_X " 1309]
+[ebrowse-ms "SCREEN_BUFFER_Y" () 512 () () 0 0  "main.h" "#define SCREEN_BUFFER_Y " 1347]
+[ebrowse-ms "SCREEN_HEIGHT" () 512 () () 0 0  "main.h" "#define SCREEN_HEIGHT " 1434]
+[ebrowse-ms "SCREEN_WIDTH" () 512 () () 0 0  "main.h" "#define SCREEN_WIDTH " 1382]
+[ebrowse-ms "SQ_TXT_SIDE" () 512 () () 0 0  "main.h" "#define SQ_TXT_SIDE	" 1133]
+[ebrowse-ms "STAIRS_DOWN_GRAY" () 512 () () 0 0  "main.h" "#define STAIRS_DOWN_GRAY	" 1928]
+[ebrowse-ms "STATE_MENU" () 512 () () 0 0  "main.h" "#define STATE_MENU	" 2139]
+[ebrowse-ms "STATE_PLAY" () 512 () () 0 0  "main.h" "#define STATE_PLAY	" 2161]
+[ebrowse-ms "Surface" () 512 () () 0 0  "main.h" "#define Surface	" 747]
+[ebrowse-ms "TILE_COLS" () 512 () () 0 0  "main.h" "#define TILE_COLS	" 1197]
+[ebrowse-ms "TILE_HEIGHT" () 512 () () 0 0  "main.h" "#define TILE_HEIGHT	" 1102]
+[ebrowse-ms "TILE_NON_SOLID" () 512 () () 0 0  "main.h" "#define TILE_NON_SOLID	" 1721]
+[ebrowse-ms "TILE_ROWS" () 512 () () 0 0  "main.h" "#define TILE_ROWS	" 1154]
+[ebrowse-ms "TILE_SIDE" () 512 () () 0 0  "main.h" "#define TILE_SIDE	" 1048]
+[ebrowse-ms "TILE_SOLID" () 512 () () 0 0  "main.h" "#define TILE_SOLID	" 1694]
+[ebrowse-ms "TILE_WIDTH" () 512 () () 0 0  "main.h" "#define TILE_WIDTH	" 1071]
+[ebrowse-ms "TRANSPARENT" () 512 () () 0 0  "main.h" "#define TRANSPARENT	" 1600]
+[ebrowse-ms "TXT_PATH" () 512 () () 0 0  "main.h" "#define TXT_PATH	" 1550]
+[ebrowse-ms "VIDEO_MODE" () 512 () () 0 0  "main.h" "#define VIDEO_MODE	" 856]
+[ebrowse-ms "WALL_GRAY" () 512 () () 0 0  "main.h" "#define WALL_GRAY	" 1897]
+[ebrowse-ms "scout" () 512 () () 0 0  "main.h" "#define scout	" 666]
+[ebrowse-ms "sendl" () 512 () () 0 0  "main.h" "#define sendl	" 692]
+[ebrowse-ms "sstring" () 512 () () 0 0  "main.h" "#define sstring	" 638]
+[ebrowse-ms "svector" () 512 () () 0 0  "main.h" "#define svector	" 608]
+)
+()
+()()
+]

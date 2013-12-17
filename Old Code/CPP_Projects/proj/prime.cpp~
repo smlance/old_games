@@ -1,0 +1,56 @@
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include "boost/thread.hpp"
+
+void findPrimes(int start, int end)
+{
+	if (start == 0  || start % 2 == 0)
+	{
+		start++;
+	}
+	if (start < end)
+	{
+		for (int possible_prime = start; possible_prime < end; possible_prime += 2)
+		{
+		
+			//if (possible_prime % 2 != 0)
+			//{
+				int count = 0;
+				
+				for (int poss_div = 2; poss_div <= sqrt(possible_prime); poss_div++)
+				{
+					if (possible_prime % poss_div == 0)
+					{
+						count++;
+						break;
+					}
+				}
+				
+				if (count == 0)
+				{
+					std::cout << possible_prime << std::endl;
+				}
+				
+			//}
+			
+		}
+	}
+}
+
+int main()
+{
+	boost::thread prime(findPrimes, 100000, 1000000);
+	//prime.join();
+	/*for (int i = 0; i < 1000; i++)
+	{
+		for (int x = 0; x < 10000; x++)
+		{
+			
+			//std::cout << "Hi" << std::endl;
+		}
+	}*/
+	prime.join();
+	return 0;
+}

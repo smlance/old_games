@@ -1,0 +1,53 @@
+#include <iostream>
+
+void add_five(int &i)
+{
+	i += 5;
+	/*
+	 * When passing by reference, we don't have to return anything; we can just add
+	 * to the value. When we pass in &i, we are passing the address of i; when we
+	 * add a value to the variable, we are changing it -- and since the variable
+	 * refers to the variable passed in, that value gets changed.
+	 */
+}
+
+void add_five_p(int *p)
+{
+	(*p) += 5;
+	/*
+	 * p is the pointer to the integer. By using *, we can access the value to which
+	 * p, the pointer, points.
+	 */
+}
+
+int main()
+{
+	int a = 5;		// describes a VALUE
+	int &b = a; 	// describes a VALUE (by reference)
+	int *c = &a;	// describes an ADDRESS of a value
+	// &a = &b = c
+	// RIGHT-HAND & means "address of" (as in int *c = [&a]; )
+	// RIGHT-HAND * means "value pointed to by" (as in std::cout << [*c]; )
+	// LEFT-HAND & means "reference to" (as in int [&b] = a; )
+	// LEFT-HAND * means "pointer called" (as in int [*c] = &a; )
+	
+	// a (&b) becomes 10
+	add_five(b);
+	// a becomes 15
+	add_five(a);
+	
+	// c is a pointer; its value is an address
+	// to access the value at the address, use *c (this retrieves &a = 15)
+	std::cout << &a << "\t" << &b << "\t" << c << std::endl;
+	
+	// a becomes 20
+	add_five_p(c);
+	// a becomes 25
+	add_five_p(&b);
+	// a becomes 30
+	add_five_p(&a);
+	
+	std::cout << a << std::endl;
+	
+	return 0;
+}

@@ -1,0 +1,6 @@
+05-20-2012
+
+- the reason the $lines command appears to be doing nothing (echoing it produces nothing -- a blank echo) is that https is not enabled
+- local issue of running curl with ssl/https enabled; error below is produced when bu4.sh is executed:
+	curl: (1) Protocol https not supported or disabled in libcurl
+

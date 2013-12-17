@@ -1,0 +1,35 @@
+untitled project document
+by Stefan Lance
+
+~November 2010
+	-project started; basic movement, map printing, and navigating across maps
+
+(hiatus)
+
+~late January 2011
+	-project restarted using ncurses; same functionality as before
+	-started using classes
+	-eventually added items
+~February 2011
+	-started focusing more on PCG rather than the game itself: tried cellular automata, BSP trees, etc...
+	-ended up using a mixture of maze generation and several other techniques taking advantage of rand
+	-began using SDL
+	-made a map renderer using SDL
+	-adding almost everything from original project to SDL-based project
+	~1100 lines long
+	
+Specifics:
+CURRENTLY IMPLEMENTED:
+	-map generation:
+		1. generate random maze by taking two steps for each movement, generating a random direction, checking to see that there isn't anything in the possible area to be moved to, and move if possible. If not, choose another direction. Keep trying. If there's nowhere to go, choose a random odd cell (a "corner" or final/starting step cell) and restart. 
+		2. After an arbitrary number of cells have been created, knock down a few random walls.
+		3. Choose random ground cells that have a top and left adjacent wall cell, and random lengths and widths for rooms. If the bottom left cell has an adjacent bottom and right cell, carve out a room there, and add doors to adjacent ground cells not inside the room.
+		4. Get rid of adjacent doors.
+		5. Fill in dead ends by searching map for cells with 3 adjacent wall cells. While at least one of these cells exist, go up and down through the map and fill in these tiles with walls.
+		TODO: get rid of halls that lead to nowhere (possibly optimize step 2, because this could create open ends), loops that lead back to their beginnings, pointless doors and halls (loops). Check to see if any catercornered (sp?) walls exist (diagonal walls with no adjacent orthogonal walls connecting them), and either purge or connect them orthogonally.
+	-player movement and inability to move through walls
+	-field of vision: includes an immediate FOV, explored but inactive FOV, and fog of war for unexplored areas
+	-random item generation and placement. only able to view items if they're in your immediate FOV.
+	-TODO: optimize and comment code and algorithms.
+	
+

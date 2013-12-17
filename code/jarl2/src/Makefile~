@@ -1,0 +1,57 @@
+# TODO: differentiate jarl and jarl-lap based on includes / dependencies
+
+# compiler
+CC=g++
+
+# compiler flags
+CFLAGS=-c -std=c++11 -W -Wall -ansi -pedantic -g
+
+# linker flags
+LFLAGS=-std=c++11 -lSDLmain -lSDL -lSDL_image -lSDL_ttf -W -Wall -ansi -pedantic -g
+
+# object files
+OBJECTS=main.o game.o disp.o clock.o ent.o play.o tile.o font.o cam.o handler.o map.o
+
+all: jarl jarl-lap
+
+jarl: $(OBJECTS)
+	$(CC) $(OBJECTS) -o jarl.exe $(LFLAGS)
+
+jarl-lap: $(OBJECTS)
+	$(CC) $(OBJECTS) -o jarl-lap $(LFLAGS)
+	
+main.o: main.cpp
+	$(CC) $(CFLAGS) main.cpp 
+
+game.o: game.cpp
+	$(CC) $(CFLAGS) game.cpp
+	
+disp.o: disp.cpp
+	$(CC) $(CFLAGS) disp.cpp
+
+clock.o: clock.cpp
+	$(CC) $(CFLAGS) clock.cpp
+	
+ent.o: ent.cpp
+	$(CC) $(CFLAGS) ent.cpp
+
+play.o:	play.cpp
+	$(CC) $(CFLAGS) play.cpp
+
+tile.o: tile.cpp
+	$(CC) $(CFLAGS) tile.cpp
+
+font.o: font.cpp
+	$(CC) $(CFLAGS) font.cpp
+
+cam.o: cam.cpp
+	$(CC) $(CFLAGS) cam.cpp
+
+handler.o: handler.cpp
+	$(CC) $(CFLAGS) handler.cpp
+	
+map.o: map.cpp
+	$(CC) $(CFLAGS) map.cpp
+	
+clean:
+	rm -rf *o #jarl

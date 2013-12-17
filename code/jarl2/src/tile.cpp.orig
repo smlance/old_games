@@ -1,0 +1,113 @@
+#include "main.h"
+
+Tile::Tile(int x_, int y_, int id_) : Entity(x_, y_, id_)
+{
+	// arbitrary size for entity list
+	entity_list.resize(5);
+	// init entity list
+	for (unsigned int i = 0; i < entity_list.size(); i++) {
+		entity_list[i] = NULL;
+	}
+
+	// look at id and determine whether solid
+	setSolidById();
+}
+
+Tile::~Tile()
+{
+	// free objects, if any, in list
+	for (unsigned int i = 0; i < entity_list.size(); i++) {
+		if (entity_list[i])
+			delete entity_list[i];
+		entity_list[i] = NULL;
+	}
+}
+
+bool Tile::getVisible()
+{
+	return visible;
+}
+
+void Tile::setVisible(bool visible_)
+{
+	visible = visible_;
+}
+
+void Tile::init(bool solid_, bool in_room_)
+{
+	solid = solid_;
+	in_room = in_room_;
+}
+
+void Tile::setID(int id_)
+{
+	Entity::setID(id_);
+	setSolidById();
+}
+
+void Tile::setSolidById()
+{
+	switch (id) {
+		// ground tiles
+	case GROUND_GRAY:
+		// case ...:
+		solid = false;
+		break;
+
+		// wall tiles
+	case WALL_GRAY:
+		// case ...:
+		solid = true;
+		break;
+
+	default:
+		break;
+	}
+}
+
+Entity *Tile::getEnt(int pos)
+{
+	return entity_list[pos];
+}
+
+int Tile::getEntListSize()
+{
+	return entity_list.size();
+}
+
+void Tile::addEntity(Entity *ent)
+{
+	for (unsigned int i = 0; i < entity_list.size(); i++) {
+		// if we come to a cell without an entity
+		if (!(entity_list[i]))
+			entity_list[i] = ent;
+		// break loop
+		i = entity_list.size();
+	}
+}
+
+void Tile::removeEnt(int pos)
+{
+	if (entity_list[pos]) {
+		delete entity_list[pos];
+		entity_list[pos] = NULL;
+	}
+}
+
+void Tile::freeEnt()
+{
+
+}
+
+bool Tile::hasDoor()
+{
+	if (entity_list[0]) {
+		// TODO: make id sets/types (DOOR, SWORD, SHIELD, POT, etc.)
+		// and use them instead of id's for these kinds of checks
+		if (entity_list[0]->getID() == DOOR_CLOSED_GRAY)
+			return true;
+		else
+			return false;
+	} else
+		return false;
+}

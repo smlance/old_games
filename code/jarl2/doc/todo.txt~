@@ -1,0 +1,86 @@
+Remember: work on something else if you get stuck. (Just make the door addition a general loop)
+
+To Do
+
+- implement killing entities and player / entity health
+- diagonal movement? or too difficult?
+- variable text rendering system with newlines, etc.
+
+- go back to using SDL and appropriate namespace tokens
+- implement LOS (and eventually make it shadowy)
+	-> implement shadowy LOS with black for where haven't been and fog of war for where have been.
+- fix disappearing door problem with entities stepping over doors
+- fix any memory problems / make sure it doesn't use too much memory, etc.
+- maybe make each tile space have a "walkable" quality, instead of / in addition to a "solid" quality? (e.g., a stair is steppable by the character but not by entities)
+- instead of coding each entity individually, look at main.h lines 67-70 -- should put in place a system that can use these type IDs to make decisions about solidity, etc.
+- check for future position of entity so collision preventions can actually work?
+
+Soon
+
+[ ]	Create item IDs separate from gfx IDs?
+[ ] Create item types and have them be set as IDs are set (just like function for solid characteristic)
+[ ] Clean up rendering and map functions (multiple doors in room bug; nested loops)
+[ ] Maybe remove twists in long halls (count consecutive ground spaces not in a room, and if any two are separated by one wall, remove those walls; do this a random number of times)
+[ ] Remove cati-corner ground tiles that aren't directly connected (i.e., remove the one that was "added")
+[ ] Add drop-shadow to text? (Only if displayed in game area; if on HUD, no? Or not, since probably won't be black?)
+[ ] Make timer for map generation and see if it can be optimized (reduce generation time by refactoring loops)
+
+Later
+
+[-] Create initialization functions for entities and use them in addition to constructors
+[>]	Single image-loading function with texture storing array
+	[-]	Research: lazy foo tutorial site, how does it work? Go through, make sure you understand.
+[-] Figure out how to deal with deletion of globals (quit()?)
+[-] Put std functions in preprocessor directives in main.h
+	[-]	Get rid of all 'SDL_'s?
+[-] Speak to Lazy Foo about copyright of code
+
+[+] UI/HUD on the side
+[+] Cleaner text generation function that accepts multiple variables and strings into stream
+[+] Lighting (dynamic)
+[+] Entities
+	[+] Entity AI
+[+] Objects
+[+] Other levels of dungeon
+	[+] Exits
+[+] Sounds (ambient)
+[+] More general map generation algorithm (instead of creating GROUND_GRAY and WALL_GRAY, it just sets to solid/not solid/door/opening, and then at the end it assigns the map a type -- say, DUNGEON_GRAY -- which the display looks at when printing the tiles and uses to determine exactly what IDs to use for each solid/non-solid/door/whatever.
+
+Done
+
+2012-06-19
+[-] Fix map generation; rewrite, refactor, and comment algorithms
+	NOTE: Determined that this does not really need to be done, even though the algorithm could probably be shortened
+
+2012-06-18 - 2012-06-17
+[x] Attribute solidness to each entity id
+
+2012-06-16 - 2012-06-14
+[x] Event handler class to handle game loop events (keyboard)
+	[x]	Research/brainstorm how to write one, and benefits
+[x]	Player class and movement
+[x]	Map generation
+[x] Function for checking whether space is available
+
+2012-06-13
+[x]	Implement font class
+	[x]	Font creation function
+	[x]	Font deploying/text handling function
+
+2012-06-12
+[>]	Single image-loading function with texture storing array
+	[x]	Research: same site, how does offset work?
+
+2012-06-11
+[x] Clock class for FPS and timing
+	[x]	Implement into game loop
+[x]	Single image-loading function with texture storing array
+
+2012-06-10
+[x]	One graphics file containing:
+	[x]	Environment
+	[x]	Items
+	[x] Player
+	[o]	Black space (for shading? Check)
+[x]	Core SDL loop
+[x]	Makefile and build script

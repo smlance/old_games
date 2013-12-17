@@ -1,0 +1,10 @@
+all: map_gen
+
+map_gen: main.o Player.o
+	g++ main.o Player.o -lncurses -o map_gen -g -W -Wall -ansi -pedantic
+	
+main.o: main.cpp
+	g++ -c main.cpp
+
+Player.o: Player.cpp
+	g++ -c Player.cpp

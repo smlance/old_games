@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#touch *
+g++ *.cpp -o jarl-lap -lSDL -lSDLmain -lSDL_image
+rm -f *.o

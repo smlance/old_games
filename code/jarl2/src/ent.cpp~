@@ -1,0 +1,179 @@
+#include "main.h"
+
+Entity::Entity(int x_, int y_, int id_)
+{
+	x 	= 	x_;
+	y 	= 	y_;
+	id 	= 	id_;
+	time_a = 0;
+	time_m = 100; // arbitrary max
+	visible = false;
+	solid = true;
+	setStatsById(0, 0, 0);
+}
+Entity::~Entity() { }
+
+// getters
+int Entity::getID()
+{
+	return id;
+}
+int Entity::getX()
+{
+	return x;
+}
+int Entity::getY()
+{
+	return y;
+}
+bool Entity::getSolid()
+{
+	return solid;
+}
+bool Entity::getInRoom()
+{
+	return in_room;
+}
+
+// setters
+void Entity::setID(int i)
+{
+	id = i;
+}
+
+void Entity::setStatsById(int hp_, int atk_, int def_)
+{	/* the args do nothing! */
+	if (id == RAT)
+	{
+		hp = 10;
+		atk = 2;
+		def = 3;
+	}
+	else
+	{
+		hp = 999;
+		atk = 999;
+		def = 999;
+	}
+}
+
+void Entity::setSolid(bool solid_)
+{
+	solid = solid_;
+}
+void Entity::setInRoom(bool in_room_)
+{
+	in_room = in_room_;
+}
+/*int		getHP()
+{
+
+}
+int		getAtk()
+{
+
+}
+int		getDef()
+{
+
+}*/
+
+// initialize main values (used in place of ctor, because adding vars to ctors is a hassle)
+void Entity::init(bool solid_, bool in_room_)
+{
+	solid = solid_;
+	in_room = in_room_;
+	randSpawn();
+}
+
+bool Entity::inPlayerLOS()
+{
+	/*int play_x = player->getX();
+	int play_y = player->getY();*/
+
+	for (;;) {}
+}
+
+void Entity::update(int time)
+{
+	int old_x = x;
+	int old_y = y;
+
+	time_a += time;
+	if (time_a >= time_m)
+	{
+		time_a = 0;
+		//make_changes();
+		move(0);
+	}
+	// if position has changed
+	if (old_x != x || old_y != y)
+	{
+		game.getArea()->getTile(old_x, old_y)->freeEnt();
+		// XXX have a log file -- see what happens if we don't do this
+	}
+}
+
+void Entity::move(int dir)
+{
+	// random movement
+	// XXX use DIRECTION MACROs instead?
+	int direction = rand() % 4;
+	int old_x = x;
+	int old_y = y;
+	
+	if (direction == 0)
+		game.getArea()->getTile(x + 1, y)->incrementPEO();
+	else if (direction == 1)
+		game.getArea()->getTile(x - 1, y)->incrementPEO();
+	else if (direction == 2)
+		game.getArea()->getTile(x, y + 1)->incrementPEO();
+	else if (direction == 3)
+		game.getArea()->getTile(x, y - 1)->incrementPEO();
+	/* maybe separate these two parts? */
+	if (direction == 0 && !(game.getArea()->getTile(x + 1, y)->getSolid())
+		&& !(game.getArea()->getTile(x + 1, y)->hasEnt())
+		&& (game.getArea()->getTile(x + 1, y)->getPEO() < 2) )
+		x += 1;
+	else if (direction == 1 && !(game.getArea()->getTile(x - 1, y)->getSolid())
+		&& !(game.getArea()->getTile(x - 1, y)->hasEnt())
+		&& (game.getArea()->getTile(x - 1, y)->getPEO() < 2) )
+		x -= 1;
+	else if (direction == 2 && !(game.getArea()->getTile(x, y + 1)->getSolid())
+		&& !(game.getArea()->getTile(x, y + 1)->hasEnt())
+		&& (game.getArea()->getTile(x, y + 1)->getPEO() < 2) )
+		y += 1;
+	else if (direction == 3 && !(game.getArea()->getTile(x, y - 1)->getSolid())
+		&& !(game.getArea()->getTile(x, y - 1)->hasEnt())
+		&& (game.getArea()->getTile(x, y - 1)->getPEO() < 2) )
+		y -= 1;
+	
+	if (old_x != x || old_y != y)
+		moveEnt(x, y);
+}
+
+void Entity::moveEnt(int new_x, int new_y)
+{
+	game.getArea()->getTile(new_x, new_y)->addEntity(this);
+}
+
+void Entity::randSpawn()
+{
+	// TODO: attribute "solidness" to each ID
+	Map *area = game.getArea();
+	int x_ = (rand() % (area->getWidth() - 2)) + 1;
+	int y_ = (rand() % (area->getHeight() - 2)) + 1;
+	// while we are still spawning in a wall
+	while (area->getTile(x_, y_)->getSolid()
+	        // and we are not in a room
+	        || !area->getTile(x_, y_)->getInRoom())
+	{
+		// generate new random coordinates
+		x_ = (rand() % (area->getWidth() - 2)) + 1;
+		y_ = (rand() % (area->getHeight() - 2)) + 1;
+	}
+	// found right coordinates; assign them to x and y
+	x = x_;
+	y = y_;
+	area = NULL;
+}

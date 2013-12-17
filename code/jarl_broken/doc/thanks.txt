@@ -1,0 +1,7 @@
+jarl
+
+Thanks to oryx (http://www.oryxdesignlab.com/sprites/) for the tilesets!
+
+Thanks to Lazy Foo (http://lazyfoo.net/SDL_tutorials/index.php) for the bitmap font loading code! (Actually, he copyrighted it, so we need to change it a bit...)
+
+Thanks to astyle (http://astyle.sourceforge.net/) for the autoformatting! This saved a lot of time. (-A1 -C --indent=tab :) )

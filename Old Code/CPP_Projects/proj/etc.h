@@ -1,0 +1,19 @@
+#ifndef ETCH
+#define ETCH
+
+void init();
+void loop();
+void cleanUp();
+
+SDL_Surface *loadImage(std::string);
+SDL_Surface *loadTransparentImage(std::string);
+void applySurface(int, int, SDL_Surface*, SDL_Surface*, SDL_Rect * = NULL);
+
+class Object;
+class Tile;
+class Map;
+class Player;
+struct gm_Item;
+struct gm_Cell;
+
+#endif

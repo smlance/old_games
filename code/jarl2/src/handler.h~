@@ -1,0 +1,13 @@
+#ifndef HANDLER_H
+#define HANDLER_H
+
+class Handler {
+	private:
+	
+	public:
+	Handler();
+	~Handler();
+	void handle();
+};
+
+#endif // HANDLER_H

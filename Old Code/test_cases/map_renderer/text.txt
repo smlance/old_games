@@ -1,0 +1,22 @@
+#ifndef TIMERH
+#define TIMERH
+
+class Timer
+{
+	private:
+	int start_ticks;
+	int paused_ticks;
+	bool paused, started;
+	
+	public:
+	Timer();
+	void start();
+	void stop();
+	void pause();
+	void unpause();
+	int getTicks();
+	bool isStarted();
+	bool isPaused();
+};
+
+#endif

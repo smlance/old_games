@@ -1,0 +1,8 @@
+#ifndef ETCH
+#define ETCH
+
+void init();
+void loop();
+void cleanUp();
+
+#endif

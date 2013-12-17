@@ -1,0 +1,12 @@
+#include "main.h"
+#include "etc.h"
+
+SDL_Surface *screen = NULL;
+
+int main(int argc, char **argv)
+{
+	init();
+	loop();
+	cleanUp();
+	return 0;
+}

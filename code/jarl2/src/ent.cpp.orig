@@ -1,0 +1,105 @@
+#include "main.h"
+
+Entity::Entity(int x_, int y_, int id_)
+{
+	x 	= 	x_;
+	y 	= 	y_;
+	id 	= 	id_;
+	time_a = 0;
+	time_m = 1000; // arbitrary max
+	visible = false;
+}
+Entity::~Entity() { }
+
+// getters
+int Entity::getID()
+{
+	return id;
+}
+int Entity::getX()
+{
+	return x;
+}
+int Entity::getY()
+{
+	return y;
+}
+bool Entity::getSolid()
+{
+	return solid;
+}
+bool Entity::getInRoom()
+{
+	return in_room;
+}
+
+// setters
+void Entity::setID(int i)
+{
+	id = i;
+}
+void Entity::setSolid(bool solid_)
+{
+	solid = solid_;
+}
+void Entity::setInRoom(bool in_room_)
+{
+	in_room = in_room_;
+}
+
+// initialize main values (used in place of ctor, because adding vars to ctors is a hassle)
+void Entity::init(bool solid_, bool in_room_)
+{
+	solid = solid_;
+	in_room = in_room_;
+	randSpawn();
+}
+
+bool Entity::inPlayerLOS()
+{
+	/*int play_x = player->getX();
+	int play_y = player->getY();*/
+
+	for (;;) {}
+}
+
+void Entity::update(int time)
+{
+	int old_x = x;
+	int old_y = y;
+
+	time_a += time;
+	if (time_a >= time_m) {
+		time_a = 0;
+		//make_changes();
+	}
+	// if position has changed
+	if (old_x != x || old_y != y) {
+		//map.getArea()->getTile(old_x, old_y)->freeEnt
+	}
+}
+
+void Entity::move(int dir)
+{
+
+}
+
+void Entity::randSpawn()
+{
+	// TODO: attribute "solidness" to each ID
+	Map *area = game.getArea();
+	int x_ = (rand() % (area->getWidth() - 2)) + 1;
+	int y_ = (rand() % (area->getHeight() - 2)) + 1;
+	// while we are still spawning in a wall
+	while (area->getTile(x_, y_)->getSolid()
+	          // and we are not in a room
+	          || !area->getTile(x_, y_)->getInRoom()) {
+		// generate new random coordinates
+		x_ = (rand() % (area->getWidth() - 2)) + 1;
+		y_ = (rand() % (area->getHeight() - 2)) + 1;
+	}
+	// found right coordinates; assign them to x and y
+	x = x_;
+	y = y_;
+	area = NULL;
+}

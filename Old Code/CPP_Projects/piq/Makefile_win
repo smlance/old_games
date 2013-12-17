@@ -1,0 +1,25 @@
+all: piq
+
+piq: main.o game.o display.o timer.o entity.o editor.o
+	i586-mingw32msvc-g++ -std=c++0x  main.o game.o display.o timer.o entity.o editor.o -o piq.exe -lmingw32 -lSDLmain -lSDL -lSDL_image -lSDL_ttf -W -Wall -ansi -pedantic -g -ggdb -I/usr/i586-mingw32msvc/include/SDL
+	
+main.o: main.cpp
+	i586-mingw32msvc-g++ -c main.cpp
+
+game.o: game.cpp
+	i586-mingw32msvc-g++ -c game.cpp
+	
+display.o: display.cpp
+	i586-mingw32msvc-g++ -c display.cpp
+
+timer.o: timer.cpp
+	i586-mingw32msvc-g++ -c timer.cpp
+	
+entity.o: entity.cpp
+	i586-mingw32msvc-g++ -c entity.cpp
+	
+editor.o: editor.cpp
+	i586-mingw32msvc-g++ -c editor.cpp
+	
+clean:
+	rm -rf *o #piq

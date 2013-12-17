@@ -1,0 +1,4 @@
+#!/bin/bash
+
+g++ *.cpp -o jarl -lSDL -lSDLmain -lSDL_image -W -Wall -ansi -pedantic -g
+rm -f *.o

@@ -1,0 +1,297 @@
+	Rect 	frames[rows*cols];
+	Surface frame_surf[rows*cols];
+	// load sprite sheet into a surface
+	Surface *file = load_image(GFX_PATH);
+	// get bg color (?)
+	Uint32 bg_color = SDL_MapRGB((file)->format, 0xFF, 0, 0xFF);
+	
+	// get dimensions of each cell
+	int cell_width = file->w / cols;
+	int cell_height = file->h / rows;
+	
+	// demark top and bottom positions
+	int top = cell_height;
+	int base = cell_height;
+	
+	int current_frame = 0;
+	
+	for (int r = 0; r < rows; r++) {
+		for (int c = 0; c < cols; c++) {
+			frames[current_frame].x = cell_width * c;
+			frames[current_frame].y = cell_height * r;
+			
+			frames[current_frame].w = cell_width;
+			frames[current_frame].h = cell_height;
+			
+	     	for( int pixel_col = 0; pixel_col < cell_width; pixel_col++ )
+            {
+                for( int pixel_row = 0; pixel_row < cell_height; pixel_row++ )
+                {
+                    int pixel_x = ( cell_width * c ) + pixel_col;
+                    int pixel_y = ( cell_height * r ) + pixel_row;
+
+                    //If a non colorkey pixel is found
+                    if( getPixel32( pixel_x, pixel_y, file ) != bg_color )
+                    {
+                        //Set the x offset
+                        frames[ current_frame ].x = pixel_x;
+
+                        //Break the loops
+                        pixel_col = cell_width;
+                        pixel_row = cell_height;
+                    }
+                }
+            }
+			
+			for( int pixel_col_w = cell_width - 1; pixel_col_w >= 0; pixel_col_w-- )
+            {	Rect 	frames[rows*cols];
+	Surface frame_surf[rows*cols];
+	Surface *file = (load_image("./gfx/idleanimation.png"));
+	Uint32 bg_color = SDL_MapRGB((file)->format, 0, 0xFF, 0xFF);
+	
+	int cell_width = file->w / cols;
+	int cell_height = file->h / rows;
+	
+	int top = cell_height;
+	int base = cell_height;
+	
+	int current_frame = 0;
+	
+	for (int r = 0; r < rows; r++) {
+		for (int c = 0; c < cols; c++) {
+			frames[current_frame].x = cell_width * c;
+			frames[current_frame].y = cell_height * r;
+			
+			frames[current_frame].w = cell_width;
+			frames[current_frame].h = cell_height;
+			
+	     	for( int pixel_col = 0; pixel_col < cell_width; pixel_col++ )
+            {
+                for( int pixel_row = 0; pixel_row < cell_height; pixel_row++ )
+                {
+                    int pixel_x = ( cell_width * c ) + pixel_col;
+                    int pixel_y = ( cell_height * r ) + pixel_row;
+
+                    //If a non colorkey pixel is found
+                    if( getPixel32( pixel_x, pixel_y, file ) != bg_color )
+                    {
+                        //Set the x offset
+                        frames[ current_frame ].x = pixel_x;
+
+                        //Break the loops
+                        pixel_col = cell_width;
+                        pixel_row = cell_height;
+                    }
+                }
+            }
+			
+			for( int pixel_col_w = cell_width - 1; pixel_col_w >= 0; pixel_col_w-- )
+            {
+                for( int pixel_row_w = 0; pixel_row_w < cell_height; pixel_row_w++ )
+                {
+                    int pixel_x = ( cell_width * c ) + pixel_col_w;
+                    int pixel_y = ( cell_height * r ) + pixel_row_w;
+
+                    if( getPixel32( pixel_x, pixel_y, file ) != bg_color )
+                    {
+                        //Set the width
+                       frames[current_frame ].w = ( pixel_x - frames[current_frame ].x ) + 1;
+
+                        //Break the loops
+                        pixel_col_w = -1;
+                        pixel_row_w = cell_height;
+                    }
+                }
+            }
+            
+            for( int pixel_row = 0; pixel_row < cell_height; pixel_row++ )
+            {
+                //Go through pixel columns
+                for( int pixel_col = 0; pixel_col < cell_width; pixel_col++ )
+                {
+                    //get_ the pixel offsets
+                    int pixel_x = ( cell_width * c ) + pixel_col;
+                    int pixel_y = ( cell_height * r ) + pixel_row;
+
+                    //If a non colorkey pixel is found
+                    if( getPixel32( pixel_x, pixel_y, file ) != bg_color )
+                    {
+                        //If new top is found
+                        if( pixel_row < top )
+                        {
+                            top = pixel_row; std::cout << top << std::endl;
+                            frames[ current_frame ].y += top;
+        					frames[ current_frame ].h -= top;
+                        }
+
+                        //Break the loops
+                        pixel_col = cell_width;
+                        pixel_row = cell_height;
+                    }
+                }
+            }
+            
+         	for( int pixel_row = cell_height - 1; pixel_row >= 0; pixel_row-- )
+                {
+                    //Go through pixel columns
+                    for( int pixel_col = 0; pixel_col < cell_width; pixel_col++ )
+                    {
+                        //get_ the pixel offsets
+                        int pixel_x = ( cell_width * c ) + pixel_col;
+                        int pixel_y = ( cell_height * r ) + pixel_row;
+
+                        //If a non colorkey pixel is found
+                        if( getPixel32( pixel_x, pixel_y, file ) != bg_color )
+                        {
+                            //Bottom of a is found
+                            base = pixel_row;
+
+                            //Break the loops
+                            pixel_col = cell_width;
+                            pixel_row = -1;
+                        }
+                    }
+                }
+			
+			current_frame++;
+        }
+    }
+    
+    // get rid of excess top and bottom bits (transparent)
+    for( int t = 0; t < rows*cols; t++ )
+    {
+        frames[ t ].y = top + 1; 	/* this is the fix for the weird collison crap. maybe to avoid
+        							 * this, remake the sprite file with different height/trans.
+        							 * buffers?
+        							 */
+        frames[ t ].h -= top;
+    }
+	
+	Rect offset;
+	offset.x = 0;
+	offset.y = 0;
+	
+	for (int i = 0; i < rows*cols; i++) {
+		// create temporary surface with no transparency setttings (first parameter)
+		Surface *surf = SDL_CreateRGBSurface(0,frames[i].w,frames[i].h,32,
+		0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000); // XXX FIND OUT ABOUT ORDER
+		//Uint32(0x000000ff), Uint32(0x0000ff00),Uint32(0x00ff0000), Uint32(0xff000000));
+		// yes, all the later Uint32 parameters are necessary :(
+		
+		// blit picture with correct clipping to new surface
+		SDL_BlitSurface((file), &frames[i], (surf), &offset); // might as well nullify offset
+		
+		// store the temporary surface in the permanent location in the list
+		image_list[cell + i] = surf;
+		
+		// nullify the pointer (freeing it also frees image_list[]
+		//SDL_FreeSurface(surf);
+		surf = NULL;
+		//assert(image_list[cell + i]);
+	}
+	
+	
+                for( int pixel_row_w = 0; pixel_row_w < cell_height; pixel_row_w++ )
+                {
+                    int pixel_x = ( cell_width * c ) + pixel_col_w;
+                    int pixel_y = ( cell_height * r ) + pixel_row_w;
+
+                    if( getPixel32( pixel_x, pixel_y, file ) != bg_color )
+                    {
+                        //Set the width
+                       frames[current_frame ].w = ( pixel_x - frames[current_frame ].x ) + 1;
+
+                        //Break the loops
+                        pixel_col_w = -1;
+                        pixel_row_w = cell_height;
+                    }
+                }
+            }
+            
+            for( int pixel_row = 0; pixel_row < cell_height; pixel_row++ )
+            {
+                //Go through pixel columns
+                for( int pixel_col = 0; pixel_col < cell_width; pixel_col++ )
+                {
+                    //get_ the pixel offsets
+                    int pixel_x = ( cell_width * c ) + pixel_col;
+                    int pixel_y = ( cell_height * r ) + pixel_row;
+
+                    //If a non colorkey pixel is found
+                    if( getPixel32( pixel_x, pixel_y, file ) != bg_color )
+                    {
+                        //If new top is found
+                        if( pixel_row < top )
+                        {
+                            top = pixel_row; std::cout << top << std::endl;
+                            frames[ current_frame ].y += top;
+        					frames[ current_frame ].h -= top;
+                        }
+
+                        //Break the loops
+                        pixel_col = cell_width;
+                        pixel_row = cell_height;
+                    }
+                }
+            }
+            
+         	for( int pixel_row = cell_height - 1; pixel_row >= 0; pixel_row-- )
+                {
+                    //Go through pixel columns
+                    for( int pixel_col = 0; pixel_col < cell_width; pixel_col++ )
+                    {
+                        //get_ the pixel offsets
+                        int pixel_x = ( cell_width * c ) + pixel_col;
+                        int pixel_y = ( cell_height * r ) + pixel_row;
+
+                        //If a non colorkey pixel is found
+                        if( getPixel32( pixel_x, pixel_y, file ) != bg_color )
+                        {
+                            //Bottom of a is found
+                            base = pixel_row;
+
+                            //Break the loops
+                            pixel_col = cell_width;
+                            pixel_row = -1;
+                        }
+                    }
+                }
+			
+			current_frame++;
+        }
+    }
+    
+    // get rid of excess top and bottom bits (transparent)
+    for( int t = 0; t < rows*cols; t++ )
+    {
+        frames[ t ].y = top + 1; 	/* this is the fix for the weird collison crap. maybe to avoid
+        							 * this, remake the sprite file with different height/trans.
+        							 * buffers?
+        							 */
+        frames[ t ].h -= top;
+    }
+	
+	Rect offset;
+	offset.x = 0;
+	offset.y = 0;
+	
+	for (int i = 0; i < rows*cols; i++) {
+		// create temporary surface with no transparency setttings (first parameter)
+		Surface *surf = SDL_CreateRGBSurface(0,frames[i].w,frames[i].h,32,
+		0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000); // XXX FIND OUT ABOUT ORDER
+		//Uint32(0x000000ff), Uint32(0x0000ff00),Uint32(0x00ff0000), Uint32(0xff000000));
+		// yes, all the later Uint32 parameters are necessary :(
+		
+		// blit picture with correct clipping to new surface
+		SDL_BlitSurface((file), &frames[i], (surf), &offset); // might as well nullify offset
+		
+		// store the temporary surface in the permanent location in the list
+		image_list[cell + i] = surf;
+		
+		// nullify the pointer (freeing it also frees image_list[]
+		//SDL_FreeSurface(surf);
+		surf = NULL;
+		//assert(image_list[cell + i]);
+	}
+	
+	

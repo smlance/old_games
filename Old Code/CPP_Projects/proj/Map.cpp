@@ -1,0 +1,105 @@
+#include "main.h"
+#include "etc.h"
+#include "Map.h"
+#include "Tile.h"
+#include "Object.h"
+#include "GenMap.h"
+
+Map::Map()
+{
+	this_map = new GenMap;
+	
+	//if (this_map->toFile())
+	//{
+	loadMap();
+	//}
+}
+
+void Map::loadMap()
+{
+	int x = 0, y = 0;
+	//std::ifstream map_file ("./resources/map.txt");
+	
+	for (int i = 0; i < (SCREEN_HEIGHT/TILE_HEIGHT); i++)
+	{
+		for (int j = 0; j < (SCREEN_WIDTH/TILE_WIDTH); j++)
+		{
+			int type = 0;
+			type = this_map->map[i][j].type;
+			
+			if (type == 35)
+			{
+				type = 0;
+			}
+			else if (type == 32)
+			{	
+				type = 1;
+			}
+			else if (type == 45)
+			{
+				type = 2;
+			};
+			
+			tiles[i][j] = new Tile(x, y, type, this);
+			
+			if (this_map->map[i][j].item_list)
+			{
+				/*create new object depending on type (easier way checking
+				every single type of item it could be?)*/
+				if (this_map->map[i][j].item_list->i_type == SWORD)
+				{
+					tiles[i][j]->item_list = new gm_Item;
+					tiles[i][j]->item_list->item = new Sword
+					(x, y, 0, 0, this, tiles[i][j]);
+					//SDL_Delay(2000);
+					//this_map->map[i][j].item_list->item->applyToMap();
+					//SDL_Delay(2000);
+					std::cout << "SWORD" << std::endl;
+				}
+				else if (this_map->map[i][j].item_list->i_type == POTION)
+				{
+					tiles[i][j]->item_list = new gm_Item;
+					tiles[i][j]->item_list->item = new Potion
+					(x, y, 0, 0, this, tiles[i][j]);
+					//SDL_Delay(2000);
+					//this_map->map[i][j].item_list->item->applyToMap();
+					//SDL_Delay(2000);
+					std::cout << "POTION" << std::endl;
+				}
+				std::cout << "Object found" << std::endl;
+			}
+			
+			
+			//tiles[i][j] = new Tile(x, y, type, this);
+			x += TILE_WIDTH;
+		}
+		x = 0;
+		y += TILE_HEIGHT;
+	}
+}
+
+void Map::displayMap()
+{
+	//applySurface(0, 0, map, screen);
+}
+
+void Map::updateDisp(int x, int y)
+{
+	applySurface(x*TILE_WIDTH, y*TILE_HEIGHT, tiles[y][x]->sprite, screen);
+}
+
+bool Map::spaceIsEmpty(int x, int y)
+{
+	if (tiles[y][x]->type == 0)
+	{
+		return false;
+	};
+	return true;
+}
+
+Map::~Map()
+{
+	//SDL_FreeSurface(map);
+	//delete tiles;
+	delete this_map;
+}

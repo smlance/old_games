@@ -1,0 +1,5 @@
+echo -e "\nUpdating files...\n"
+touch *.cpp
+echo -e "Compiling and linking...\n"
+make stefan
+echo -e "\nDone!\n"

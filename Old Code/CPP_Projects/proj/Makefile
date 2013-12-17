@@ -1,0 +1,28 @@
+all: mapr
+
+mapr: main.o etc.o Tile.o Map.o GenMap.o Player.o Object.o
+	i586-mingw32msvc-g++ main.o etc.o Tile.o Map.o GenMap.o Player.o Object.o -o mapr.exe -lmingw32 -lSDLmain -lSDL -lSDL_image -W -Wall -ansi -pedantic -g -ggdb -I/usr/i586-mingw32msvc/include/SDL
+	
+main.o: main.cpp
+	i586-mingw32msvc-g++ -c main.cpp
+
+etc.o: etc.cpp
+	i586-mingw32msvc-g++ -c etc.cpp
+	
+Tile.o: Tile.cpp
+	i586-mingw32msvc-g++ -c Tile.cpp
+	
+Map.o: Map.cpp
+	i586-mingw32msvc-g++ -c Map.cpp
+	
+GenMap.o: GenMap.cpp
+	i586-mingw32msvc-g++ -c GenMap.cpp
+
+Player.o: Player.cpp
+	i586-mingw32msvc-g++ -c Player.cpp
+	
+Object.o: Object.cpp
+	i586-mingw32msvc-g++ -c Object.cpp
+
+stefan:
+	g++ *.cpp -o mapr -lSDL -lSDL_image

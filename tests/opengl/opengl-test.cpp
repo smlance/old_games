@@ -1,0 +1,161 @@
+/*	GL headers	*/
+#include <GL/glut.h>/* GLUT lib	*/
+#include <GL/gl.h>	/*	OpenGL32 lib	*/
+#include <GL/glu.h>	/*	GLu32 lib	*/
+
+/*	SDL headers	*/
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+
+/*	c headers	*/
+#include <unistd.h>	/*	sleep	*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+
+#define ESCAPE 27
+
+/*
+ * functions: mgl_init, Resize, KeyPress, Draw, main
+ */
+
+int window;
+GLuint texture[1];
+
+SDL_Surface *load_image(std::string filename)
+{
+	SDL_Surface *loaded_image = NULL;
+	SDL_Surface *optimized_image = NULL;
+	loaded_image = IMG_Load(filename.c_str());
+	
+	if (loaded_image)
+	{
+		optimized_image = SDL_DisplayFormat(loaded_image);
+		SDL_FreeSurface(loaded_image);
+		
+		if (optimized_image)
+		{
+			SDL_SetColorKey(optimized_image, SDL_SRCCOLORKEY, SDL_MapRGB
+				(optimized_image->format, 0, 0xFF, 0xFF));
+		}
+	}
+	
+	return optimized_image;
+}
+
+int load_texture() {
+	SDL_Surface *tex[1];
+	tex[0] = SDL_LoadBMP("nehe.bmp");
+	glGenTextures(1, &texture[0]);
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, tex[0]->w,
+		tex[0]->h, 0, GL_BGR, GL_UNSIGNED_BYTE, tex[0]->pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
+	SDL_FreeSurface(tex[0]);
+}
+
+void mgl_init(int Width, int Height)
+{
+	
+	glEnable(GL_TEXTURE_2D);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearDepth(1.0);				// Enables Clearing Of The Depth Buffer
+	glDepthFunc(GL_LESS);				// The Type Of Depth Test To Do
+	glEnable(GL_DEPTH_TEST);			// Enables Depth Testing
+ 	glShadeModel(GL_SMOOTH);			// Enables Smooth Color Shading
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(0.0f,(GLfloat)Width/(GLfloat)Height,0.0f,00.0f);
+
+	glMatrixMode(GL_MODELVIEW);
+}
+
+
+void mgl_resize_scene(int Width, int Height)
+{
+  if (Height==0)				// Prevent A Divide By Zero If The Window Is Too Small
+    Height=1;
+
+  glViewport(0, 0, Width, Height);		// Reset The Current Viewport And Perspective Transformation
+
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+
+  gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f,100.0f);
+  glMatrixMode(GL_MODELVIEW);
+}
+
+void mgl_draw_scene()
+{
+  static float angle = 0.0f;
+  static float z_move = 0.0f;
+  static float z_const = 0.0005f;
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity();
+  glBindTexture(GL_TEXTURE_2D, texture[0]);
+  
+  glTranslatef(0.0f, 0.0f, -5.0f + z_move);
+  
+  //glPointSize(2);
+  glRotatef(angle, 0.0f, 1.0f, 0.0f);
+  
+  glBegin(GL_POLYGON);
+  glTexCoord2f(0.0f, 1.0f);
+  glVertex3f(-1.0f, -1.0f, 0.0f);
+  glTexCoord2f(1.0f, 1.0f);
+  glVertex3f( 1.0f, -1.0f, 0.0f);
+  glTexCoord2f(1.0f, 0.0f);
+  glVertex3f( 1.0f, 1.0f, 0.0f);
+  glTexCoord2f(0.0f, 0.0f);
+  glVertex3f(-1.0f, 1.0f, 0.0f);
+  glEnd();
+  
+  angle += 0.04f;
+  
+  z_move += z_const;
+  if (z_move >= 1.0f) {
+  	z_const = -z_const;
+  }
+  if (z_move <= -1.0f) {
+  	z_const = -z_const;
+  }
+  
+  glutSwapBuffers();
+}
+
+void mgl_key_pressed(unsigned char key, int x, int y) 
+{
+    usleep(100);
+
+    if (key == ESCAPE) 
+    { 
+		glutDestroyWindow(window); 
+		exit(0);                   
+    }
+}
+
+int main(int argc, char **argv)
+{
+  /*	initialize window	*/
+  glutInit(&argc, argv);
+  glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
+  glutInitWindowSize(640, 480);
+  glutInitWindowPosition(50, 50);
+  window = glutCreateWindow("Bryss");
+  
+  /*	drawing and callback functions	*/
+  glutDisplayFunc(&mgl_draw_scene);
+  glutIdleFunc(&mgl_draw_scene);
+  glutReshapeFunc(&mgl_resize_scene);
+  glutKeyboardFunc(&mgl_key_pressed);
+  mgl_init(640, 480); 
+  
+  /*	loop	*/
+  glutMainLoop();  
+
+  return 1;
+}

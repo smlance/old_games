@@ -1,0 +1,526 @@
+#include "main.h"
+
+Map::Map() { }
+Map::~Map()
+{
+	// delete and free tile pointers
+	for (unsigned int i = 0; i < map.size(); i++)
+	{
+		for (unsigned int j = 0; j < map[i].size(); j++)
+		{
+			if (map[i][j]) delete map[i][j];
+			map[i][j] = NULL;
+		}
+	}
+}
+
+Tile *Map::getTile(int x, int y)
+{
+	return map[x][y];
+}
+
+int Map::getHeight()
+{
+	return map[0].size();
+}
+
+int Map::getWidth()
+{
+	return map.size();
+}
+
+void Map::build()
+{
+	init();
+	addMaze();
+	addRooms();
+	// addRand needs to be fixed, because it removes corner cells
+	addRand();
+	removeDeadEnds();
+	addDoors();
+	removeDoubleDoors();
+	addExit();
+}
+
+void Map::init()
+{
+	// screen dimensions
+	map.resize(MAP_COLS);
+	for (unsigned int i = 0; i < map.size(); i++)
+	{
+		map[i].resize(MAP_ROWS);
+	}
+
+	// fill with default tiles
+	for (unsigned int i = 0; i < map.size(); i++)
+	{
+		for (unsigned int j = 0; j < map[i].size(); j++)
+		{
+			map[i][j] = new Tile(i, j, WALL_GRAY);
+			map[i][j]->setInRoom(false);
+		}
+	}
+}
+
+void Map::addMaze()
+{
+	int dig_x, dig_y, dug_curr, dug_desired, start_x, start_y;
+	dug_curr = 0;
+	// arbitrary number of cells to dig (fool around with it)
+	dug_desired = getHeight()*getWidth()*.175;
+	// init dig locations
+	dig_x = 0;
+	dig_y = 0;
+
+	// while either is even
+	// (we want to ensure both are odd)
+	while (dig_x % 2 == 0 || dig_y % 2 == 0)
+	{
+		// add 1 to ensure we don't get a cell on the edge (0)
+		// subtract 2 so we don't get the size as a result (would
+		// segfault, since size only goes up to dimension - 1)
+		dig_x = (rand() % (getWidth() - 2)) + 1;
+		dig_y = (rand() % (getHeight() - 2)) + 1;
+	}
+
+	start_x = dig_x;
+	start_y = dig_y;
+	map[dig_x][dig_y]->setID(GROUND_GRAY);
+	dug_curr++;
+
+	bool no_up, no_down, no_left, no_right;
+	no_up = false;
+	no_down = false;
+	no_left = false;
+	no_right = false;
+
+	while (dug_curr < dug_desired)
+	{
+		// choose a direction
+		int dir = rand() % 4;
+
+		// left
+		if (dir == 0)
+		{
+			// if we have room to dig and will not go off the map
+			if (dig_x-2 >= 1)
+			{
+				// if the desired digging spot is solid
+				if (map[dig_x-2][dig_y]->getSolid())
+				{
+					// we can dig!
+					// "ground" the two adjacent cells in the desired direction
+					map[dig_x-1][dig_y]->setID(GROUND_GRAY);
+					map[dig_x-2][dig_y]->setID(GROUND_GRAY);
+					dig_x -= 2;
+					dug_curr++;
+					// make all bound-checkers false (we presumably can still move
+					// at the new digging location)
+					no_up = false;
+					no_down = false;
+					no_left = false;
+					no_right = false;
+				}
+				// otherwise, if the desired spot is taken by a dug-out spot
+				else
+				{
+					// set bound-checker to true (we cannot move there)
+					no_left = true;
+				};
+			}
+			// otherwise, if we cannot dig in the desired spot because it is off the map
+			// (really, too close to the edge)
+			else
+			{
+				// we cannot move there
+				no_left = true;
+			};
+		}
+
+		// ... the above repeats for all directions!
+		// right
+		else if (dir == 1)
+		{
+			if (dig_x+2 < getWidth()-1)
+			{
+				if (map[dig_x+2][dig_y]->getSolid())
+				{
+					map[dig_x+1][dig_y]->setID(GROUND_GRAY);
+					map[dig_x+2][dig_y]->setID(GROUND_GRAY);
+					dig_x += 2;
+					dug_curr++;
+					no_up = false;
+					no_down = false;
+					no_left = false;
+					no_right = false;
+				}
+				else
+				{
+					no_right = true;
+				};
+			}
+			else
+			{
+				no_right = true;
+			};
+		}
+
+		// up
+		else if (dir == 2)
+		{
+			if (dig_y-2 >= 1)
+			{
+				if (map[dig_x][dig_y-2]->getSolid())
+				{
+					map[dig_x][dig_y-1]->setID(GROUND_GRAY);
+					map[dig_x][dig_y-2]->setID(GROUND_GRAY);
+					dig_y -= 2;
+					dug_curr++;
+					no_up = false;
+					no_down = false;
+					no_left = false;
+					no_right = false;
+				}
+				else
+				{
+					no_up = true;
+				};
+			}
+			else
+			{
+				no_up = true;
+			};
+		}
+
+		// down
+		else if (dir == 3)
+		{
+			if (dig_y+2 < getHeight()-1)
+			{
+				if (map[dig_x][dig_y+2]->getSolid())
+				{
+					map[dig_x][dig_y+1]->setID(GROUND_GRAY);
+					map[dig_x][dig_y+2]->setID(GROUND_GRAY);
+					dig_y += 2;
+					dug_curr++;
+					no_up = false;
+					no_down = false;
+					no_left = false;
+					no_right = false;
+				}
+				else
+				{
+					no_down = true;
+				};
+			}
+			else
+			{
+				no_down = true;
+			};
+		};
+
+		// if we are stuck (can't move in any direction)
+		if (no_up && no_down && no_left && no_right)
+		{
+			int x = 0;
+			int y = 0;
+			// while our randomly generated new digging locations are even
+			while (x % 2 == 0 || y % 2 == 0)
+			{
+				// randomize them again (we do this to ensure they're odd)
+				x = rand() % (getWidth()-2) + 1;
+				y = rand() % (getHeight()-2) + 1;
+			}
+
+			// if our new spot is a ground tile
+			if (!(map[x][y]->getSolid())
+			        // and we are an even number of spaces away from our original dig position
+			        // (#o###n#)
+			        // o is original, n is new
+			        // (good dig spot!)
+			        && (abs(start_y - y) % 2 == 0) && (abs(start_x - x) % 2 == 0))
+			{
+				// set dig position to new generated coordinates
+				dig_x = x;
+				dig_y = y;
+				// assume we can move in any direction
+				no_up = false;
+				no_down = false;
+				no_left = false;
+				no_right = false;
+			}
+		}
+	}
+}
+
+void Map::addRooms()
+{
+	int dig_x, dig_y, cur, des, size_x, size_y;
+	des = rand() % 3 + 2;
+	cur = 0;
+
+	while (cur < des)
+	{
+		dig_x = rand() % (getWidth()-2) + 1;
+		dig_y = rand() % (getHeight()-2) + 1;
+		size_x = rand() % 5 + 6;
+		size_y = rand() % 5 + 3;
+
+		// if our dig coordinates and size are too big for the map
+		while (dig_x + size_x >= getWidth()-1 || dig_y + size_y >= getHeight()-1)
+		{
+			// make new positions with smaller rooms
+			dig_x = rand() % (getWidth()-2) + 1;
+			dig_y = rand() % (getHeight()-2) + 1;
+			size_x = rand() % 5 + 4;
+			size_y = rand() % 5 + 3;
+		};
+
+		if (!(map[dig_x][dig_y]->getSolid())
+		        && map[dig_x-1][dig_y]->getSolid()
+		        && map[dig_x][dig_y-1]->getSolid()
+		        && !(map[dig_x+size_x][dig_y+size_y]->getSolid())
+		        && map[dig_x+size_x+1][dig_y+size_y]->getSolid()
+		        && map[dig_x+size_x][dig_y+size_y+1]->getSolid())
+		{
+			bool taken = false;
+
+			for (int i = dig_x-1; i <= dig_x+size_x+1; i++)
+			{
+				for (int j = dig_y-1; j <= dig_y+size_y+1; j++)
+				{
+					if (map[i][j]->getInRoom())
+					{
+						taken = true;
+					}
+				}
+			}
+			if (!taken)
+			{
+				for (int i = dig_x; i <= dig_x+size_x; i++)
+				{
+					for (int j = dig_y; j <= dig_y+size_y; j++)
+					{
+						map[i][j]->setID(GROUND_GRAY);
+						map[i][j]->setInRoom(true);
+					}
+				}
+				cur++;
+			}
+
+		}
+
+	}
+}
+
+void Map::addDoors()
+{
+	// go 1 within bounds on both low and high ends, because those rows/cols
+	// will not have floor spaces available (yet)
+	for (int i = 1; i < getWidth() - 1; i++)
+	{
+		for (int j = 1; j < getHeight() - 1; j++)
+		{
+			// conditions: tile is not in a room
+			if (!map[i][j]->getInRoom()
+			        // and has exactly two wall tiles UDLR-adjacent
+			        && game.numWallsUDLR(i, j) == 2
+			        // and is UDLR-adjacent to a tile in a room
+			        && game.numUDLRAdjInRoom(i, j)
+			        // and tile is not a wall
+			        && !map[i][j]->getSolid()
+			        // and a door has not already been made here
+			        && !map[i][j]->hasDoor())
+			{
+				// ...then add a door to this cell!
+				Entity *door = new Entity(i, j, DOOR_CLOSED_GRAY);
+				// need to check for size (?XXX?)
+				map[i][j]->addEntity(door);
+			}
+		}
+	}
+}
+
+void Map::addRand()
+{
+	int dig_x, dig_y;
+	int cur, des;
+	des = rand() % 10 + 20;
+	cur = 0;
+
+	while (cur < des)
+	{
+		dig_x = rand() % (getWidth()-2) + 1;
+		dig_y = rand() % (getHeight()-2) + 1;
+		int count = 0;
+
+		for (int i = -1; i<=1; i++)
+		{
+			for (int j = -1; j<=1; j++)
+			{
+				if (j == 0 || i == 0 && !(j == 0 && i == 0))
+				{
+					if (!map[dig_x+i][dig_y+j]->getSolid())
+					{
+						count++;
+					};
+				};
+			}
+		}
+
+		if (count >= 2)
+		{
+			map[dig_x][dig_y]->setID(GROUND_GRAY);
+			cur++;
+		};
+
+		count = 0;
+	}
+}
+
+bool Map::deadEndsExist()
+{
+	bool b = false;
+
+	for (int i = 0; i < getWidth(); i++)
+	{
+		for (int j = 0; j < getHeight(); j++)
+		{
+			if (!map[i][j]->getSolid())
+			{
+				int count = 0;
+
+				for (int x = -1; x <= 1; x++)
+				{
+					for (int y = -1; y <= 1; y++)
+					{
+						if ((y == 0 || x == 0) && !(y == 0 && x == 0)
+						        && map[i+x][y+j]->getSolid())
+						{
+							count++;
+						};
+					}
+				}
+
+				if (count == 3)
+				{
+					b = true;
+				};
+			}
+		}
+	}
+
+	return b;
+}
+
+void Map::removeDeadEnds()
+{
+	// remove ALL? then player has no dead end to spawn in :(
+	while (deadEndsExist())
+	{
+		/*performs a top-down and then down-top search to get rid of dead-ends*/
+		for (int i = 0; i < getWidth(); i++)
+		{
+			for (int j = 0; j < getHeight(); j++)
+			{
+
+				if (!map[i][j]->getSolid())
+				{
+					int count = 0;
+
+					for (int x = -1; x <= 1; x++)
+					{
+						for (int y = -1; y <= 1; y++)
+						{
+							if ((y == 0 || x == 0) && !(y == 0 && x == 0)
+							        && map[i+x][y+j]->getSolid())
+							{
+								count++;
+							};
+						}
+					}
+
+					if (count == 3)
+					{
+						map[i][j]->setID(WALL_GRAY);
+					};
+				}; //end if (this tile is ground/door)
+
+			}
+		}
+
+		for (int i = getWidth()-1; i >= 0; i--)
+		{
+			for (int j = getHeight()-1; j >= 0; j--)
+			{
+
+				if (!map[i][j]->getSolid())
+				{
+					int count = 0;
+
+					for (int x = -1; x <= 1; x++)
+					{
+						for (int y = -1; y <= 1; y++)
+						{
+							if ((y == 0 || x == 0) && !(y == 0 && x == 0)
+							        && map[i+x][y+j]->getSolid())
+							{
+								count++;
+							};
+						}
+					}
+
+					if (count == 3)
+					{
+						map[i][j]->setID(WALL_GRAY);
+					};
+				}; //end if (this tile is ground/door)
+
+			}
+		}
+	}
+}
+
+void Map::removeDoubleDoors()
+{
+	for (int i = 0; i < getWidth(); i++)
+	{
+		for (int j = 0; j < getHeight(); j++)
+		{
+			// if tile has a door
+			if (map[i][j]->hasDoor()
+			        // and there are not 2 UDLR-adjacent ground tiles
+			        && game.numGroundsUDLR(i, j) != 2)
+			{
+				// remove the door
+				map[i][j]->removeEnt(0);
+				// and make the tile a ground tile
+				map[i][j]->setID(WALL_GRAY);
+			}
+		}
+	}
+}
+
+void Map::addExit()
+{
+	int cur = 0;
+	int des = 1;
+	int i, j;
+
+	while (cur < des)
+	{
+		i = (rand() % (getWidth() - 2)) + 1;
+		j = (rand() % (getHeight() - 2)) + 1;
+		// if tile is in room
+		if (map[i][j]->getInRoom()
+		        // and there are 2 UDLR-adjacent ground tiles
+		        && game.numGroundsUDLR(i, j) == 2)
+		{
+			// (the tile will be a ground tile)
+			// put the stairs on top of this cell
+			Entity *stairs_down = new Entity(i, j, STAIRS_DOWN_GRAY);
+			map[i][j]->addEntity(stairs_down);
+			cur++;
+		}
+	}
+}

@@ -1,0 +1,20 @@
+jarl docs
+
+main.cpp:
+	* Initialization
+	* SDL/event loop
+	
+main.h:
+	* Global header file
+
+ent.h:
+	* Declarations of Entity, Player, and Tile classes
+
+ent.cpp:
+	* Definitions of Entity and Player classes
+
+map.h:
+	* Declaration of Map class
+
+map.cpp:
+	* Definitions of Tile and Map classes
