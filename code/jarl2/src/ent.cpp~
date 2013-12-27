@@ -49,6 +49,12 @@ void Entity::setStatsById(int hp_, int atk_, int def_)
 		atk = 2;
 		def = 3;
 	}
+	else if (id == PLAYER)
+	{
+		hp = 20;
+		atk = 5;
+		def = 4;
+	}
 	else
 	{
 		hp = 999;
@@ -114,6 +120,11 @@ void Entity::update(int time)
 	}
 }
 
+bool Entity::solidSpace(int x, int y)
+{
+  return (game.getArea()->getTile(x, y)->getSolid())
+}
+
 void Entity::move(int dir)
 {
 	// random movement
@@ -131,7 +142,7 @@ void Entity::move(int dir)
 	else if (direction == 3)
 		game.getArea()->getTile(x, y - 1)->incrementPEO();
 	/* maybe separate these two parts? */
-	if (direction == 0 && !(game.getArea()->getTile(x + 1, y)->getSolid())
+	if (direction == 0 && !(solidSpace(x+1, y))
 		&& !(game.getArea()->getTile(x + 1, y)->hasEnt())
 		&& (game.getArea()->getTile(x + 1, y)->getPEO() < 2) )
 		x += 1;

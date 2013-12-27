@@ -120,8 +120,20 @@ void Entity::update(int time)
 	}
 }
 
+bool Entity::solidSpace(int x, int y)
+{
+  return (game.getArea()->getTile(x, y)->getSolid());
+}
+
+bool Entity::openDoor(int x, int y)
+{
+  return 0;
+}
+
 void Entity::move(int dir)
 {
+  if (solidSpace(x, y))
+    std::cout << "Uh oh!" << std::endl;
 	// random movement
 	// XXX use DIRECTION MACROs instead?
 	int direction = rand() % 4;
@@ -137,19 +149,19 @@ void Entity::move(int dir)
 	else if (direction == 3)
 		game.getArea()->getTile(x, y - 1)->incrementPEO();
 	/* maybe separate these two parts? */
-	if (direction == 0 && !(game.getArea()->getTile(x + 1, y)->getSolid())
+	if (direction == 0 && !(solidSpace(x+1, y))
 		&& !(game.getArea()->getTile(x + 1, y)->hasEnt())
 		&& (game.getArea()->getTile(x + 1, y)->getPEO() < 2) )
 		x += 1;
-	else if (direction == 1 && !(game.getArea()->getTile(x - 1, y)->getSolid())
+	else if (direction == 1 && !(solidSpace(x-1, y))
 		&& !(game.getArea()->getTile(x - 1, y)->hasEnt())
 		&& (game.getArea()->getTile(x - 1, y)->getPEO() < 2) )
 		x -= 1;
-	else if (direction == 2 && !(game.getArea()->getTile(x, y + 1)->getSolid())
+	else if (direction == 2 && !(solidSpace(x,y+1))
 		&& !(game.getArea()->getTile(x, y + 1)->hasEnt())
 		&& (game.getArea()->getTile(x, y + 1)->getPEO() < 2) )
 		y += 1;
-	else if (direction == 3 && !(game.getArea()->getTile(x, y - 1)->getSolid())
+	else if (direction == 3 && !(solidSpace(x,y-1))
 		&& !(game.getArea()->getTile(x, y - 1)->hasEnt())
 		&& (game.getArea()->getTile(x, y - 1)->getPEO() < 2) )
 		y -= 1;

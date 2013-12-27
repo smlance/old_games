@@ -5,6 +5,7 @@ To Do
 - implement killing entities and player / entity health
 - diagonal movement? or too difficult?
 - variable text rendering system with newlines, etc.
+- create a log system...
 
 - go back to using SDL and appropriate namespace tokens
 - implement LOS (and eventually make it shadowy)
