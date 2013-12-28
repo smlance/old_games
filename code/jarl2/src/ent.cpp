@@ -6,7 +6,7 @@ Entity::Entity(int x_, int y_, int id_)
 	y 	= 	y_;
 	id 	= 	id_;
 	time_a = 0;
-	time_m = 100; // arbitrary max
+	time_m = 100;
 	visible = false;
 	solid = true;
 	setStatsById(0, 0, 0);
@@ -54,6 +54,10 @@ void Entity::setStatsById(int hp_, int atk_, int def_)
 		hp = 20;
 		atk = 5;
 		def = 4;
+	}
+	else if (id == DOOR_CLOSED_GRAY)
+	{
+	  setSolid(true);
 	}
 	else
 	{
@@ -133,7 +137,7 @@ bool Entity::openDoor(int x, int y)
 void Entity::move(int dir)
 {
   if (solidSpace(x, y))
-    std::cout << "Uh oh!" << std::endl;
+    std::cout << "I'm on a solid space!!!" << std::endl;
 	// random movement
 	// XXX use DIRECTION MACROs instead?
 	int direction = rand() % 4;

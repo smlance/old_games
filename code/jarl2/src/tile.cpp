@@ -64,7 +64,7 @@ void Tile::setID(int id_)
 	setSolidById();
 }
 
-void Tile::setSolidById()
+void Tile::setSolidById() /* ??? */
 {
 	switch (id)
 	{
@@ -83,6 +83,21 @@ void Tile::setSolidById()
 	default:
 		break;
 	}
+}
+
+bool Tile::getSolid()
+{
+  // for (int i = 0; i < entity_list.size(); i++)
+  // {
+  //   if (entity_list[i])
+  //   {
+      
+  //     //if (entity_list[i]->getSolid() == true) return true;
+  //   }
+  // }
+
+  // return false;
+  return solid;
 }
 
 Entity *Tile::getEnt(int pos)
@@ -120,9 +135,7 @@ void Tile::addEntity(Entity *ent)
 		if (!(entity_list[i]))
 		{
 			entity_list[i] = ent;
-		// break loop
-		i = entity_list.size();
-		/* XXX does the break need to be in the "if" brackets? */
+			i = entity_list.size();
 		}
 	}
 }

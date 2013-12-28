@@ -28,7 +28,7 @@ public:
   /*int		getHP();
     int		getAtk();
     int		getDef();*/
-  bool	getSolid();
+  virtual bool	getSolid();
   bool	getInRoom();
   bool solidSpace(int, int);
   bool openDoor(int, int);
@@ -84,6 +84,7 @@ public:
   int		getPEO();
   Entity *getEnt(int);
   bool 	hasEnt();
+  bool getSolid();
   void 	removeEnt(int);
   void	freeEnt();
   int 	getEntListSize();

@@ -145,7 +145,8 @@ void Tile::freeEnt()
 	{
 		if (entity_list[i])
 		{
-			if (entity_list[i]->getID() == RAT)
+			if (entity_list[i]->getID() == RAT ||
+				getEnt(i)->getID() == PLAYER)
 				entity_list[i] = NULL;
 		}
 	}
