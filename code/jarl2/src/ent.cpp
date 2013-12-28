@@ -155,19 +155,23 @@ void Entity::move(int dir)
 	/* maybe separate these two parts? */
 	if (direction == 0 && !(solidSpace(x+1, y))
 		&& !(game.getArea()->getTile(x + 1, y)->hasEnt())
-		&& (game.getArea()->getTile(x + 1, y)->getPEO() < 2) )
+		&& (game.getArea()->getTile(x + 1, y)->getPEO() < 2) 
+	    && !(game.getArea()->getTile(x + 1, y)->getWalkable()) )
 		x += 1;
 	else if (direction == 1 && !(solidSpace(x-1, y))
 		&& !(game.getArea()->getTile(x - 1, y)->hasEnt())
-		&& (game.getArea()->getTile(x - 1, y)->getPEO() < 2) )
+		&& (game.getArea()->getTile(x - 1, y)->getPEO() < 2)
+		 && !(game.getArea()->getTile(x - 1, y)->getWalkable()) )
 		x -= 1;
 	else if (direction == 2 && !(solidSpace(x,y+1))
 		&& !(game.getArea()->getTile(x, y + 1)->hasEnt())
-		&& (game.getArea()->getTile(x, y + 1)->getPEO() < 2) )
+		&& (game.getArea()->getTile(x, y + 1)->getPEO() < 2) 
+	  	      && !(game.getArea()->getTile(x, y + 1)->getWalkable()) )
 		y += 1;
 	else if (direction == 3 && !(solidSpace(x,y-1))
 		&& !(game.getArea()->getTile(x, y - 1)->hasEnt())
-		&& (game.getArea()->getTile(x, y - 1)->getPEO() < 2) )
+		&& (game.getArea()->getTile(x, y - 1)->getPEO() < 2) 
+		 && !(game.getArea()->getTile(x, y - 1)->getWalkable()) )
 		y -= 1;
 	
 	if (old_x != x || old_y != y)

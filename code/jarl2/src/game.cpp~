@@ -59,12 +59,6 @@ void Game::init()
 
 void Game::update(int time)
 {
-	// send time elapsed to every entity
-	for (unsigned int i = 0; i < ent_list.size(); i++)
-	{
-		if (ent_list[i]) ent_list[i]->update(time);
-	}
-	
 	// clear number of projected entities in each tile
 	for (unsigned int i = 0; i < area->getWidth(); i++)
 	{
@@ -75,6 +69,11 @@ void Game::update(int time)
 				area->getTile(i, j)->zeroPEO();
 			}
 		}
+	}
+	// send time elapsed to every entity
+	for (unsigned int i = 0; i < ent_list.size(); i++)
+	{
+		if (ent_list[i]) ent_list[i]->update(time);
 	}
 
 }

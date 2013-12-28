@@ -112,31 +112,36 @@ void Game::checkPlayerMove(Key key)
 	switch (key)
 	{
 	case SDLK_UP:
-		if (!(area->getTile(x, y - 1)->getSolid())
-		&& !(game.getArea()->getTile(x, y - 1)->hasEnt()) )
-			ent_list[0]->move(MOVE_UP);
-		break;
+	  if (!(area->getTile(x, y - 1)->getSolid())
+	      && !(game.getArea()->getTile(x, y - 1)->hasEnt()) 
+	      && !(game.getArea()->getTile(x, y - 1)->getWalkable()) )
+	    /* For making sure an entity doesn't walk into a door; same below */
+	    ent_list[0]->move(MOVE_UP);
+	  break;
 
 	case SDLK_DOWN:
-		if (!(area->getTile(x, y + 1)->getSolid())
-		&& !(game.getArea()->getTile(x, y + 1)->hasEnt()) )
-			ent_list[0]->move(MOVE_DOWN);
-		break;
+	  if (!(area->getTile(x, y + 1)->getSolid())
+	      && !(game.getArea()->getTile(x, y + 1)->hasEnt()) 
+	      && !(game.getArea()->getTile(x, y + 1)->getWalkable()) )
+	    ent_list[0]->move(MOVE_DOWN);
+	  break;
 
 	case SDLK_LEFT:
-		if (!(area->getTile(x - 1, y)->getSolid())
-		&& !(game.getArea()->getTile(x - 1, y)->hasEnt()) )
-			ent_list[0]->move(MOVE_LEFT);
-		break;
+	  if (!(area->getTile(x - 1, y)->getSolid())
+	      && !(game.getArea()->getTile(x - 1, y)->hasEnt()) 
+	      && !(game.getArea()->getTile(x - 1, y)->getWalkable()) )
+	    ent_list[0]->move(MOVE_LEFT);
+	  break;
 
 	case SDLK_RIGHT:
-		if (!(area->getTile(x + 1, y)->getSolid())
-		&& !(game.getArea()->getTile(x + 1, y)->hasEnt()) )
-			ent_list[0]->move(MOVE_RIGHT);
-		break;
+	  if (!(area->getTile(x + 1, y)->getSolid())
+	      && !(game.getArea()->getTile(x + 1, y)->hasEnt()) 
+	      && !(game.getArea()->getTile(x + 1, y)->getWalkable()) )
+	    ent_list[0]->move(MOVE_RIGHT);
+	  break;
 
 	default:
-		break;
+	  break;
 	}
 
 	generatePlayerLOS();
