@@ -25,6 +25,7 @@ void Player::update(int time)
 	//{
 		//game.getArea()->getTile(old_x, old_y)->freeEnt();
 		// XXX have a log file -- see what happens if we don't do this
+		// XXX DO NOT FREE THE ENT HERE, BECAUSE MOVE HAPPENS REGARDLESS OF TIME UPDATES?
 	//}
 }
 

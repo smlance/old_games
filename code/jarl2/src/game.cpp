@@ -118,30 +118,53 @@ void Game::checkPlayerMove(Key key)
 	case SDLK_UP:
 	  if (!(area->getTile(x, y - 1)->getSolid())
 	      && !(game.getArea()->getTile(x, y - 1)->hasEnt()) 
-	       && !(game.getArea()->getTile(x, y - 1)->getWalkable()) )
+	       && !(game.getArea()->getTile(x, y - 1)->isWalkable()) )
 	    /* For making sure an entity doesn't walk into a door; same below */
 	    ent_list[0]->move(MOVE_UP);
+
+	  if (area->getTile(x, y - 1)->hasDoor())
+	  {
+	    std::cout << "This door is locked." << std::endl;
+	    /* consoleLog("This door is locked."); */
+	    /* Console logging occurs only for player interaction (?) */
+	  }
+
 	  break;
 
 	case SDLK_DOWN:
 	  if (!(area->getTile(x, y + 1)->getSolid())
 	      && !(game.getArea()->getTile(x, y + 1)->hasEnt()) 
-	      && !(game.getArea()->getTile(x, y + 1)->getWalkable()) )
+	      && !(game.getArea()->getTile(x, y + 1)->isWalkable()) )
 	    ent_list[0]->move(MOVE_DOWN);
+
+	  if (area->getTile(x, y + 1)->hasDoor())
+	  {
+	    std::cout << "This door is locked." << std::endl;
+	  }
 	  break;
 
 	case SDLK_LEFT:
 	  if (!(area->getTile(x - 1, y)->getSolid())
 	      && !(game.getArea()->getTile(x - 1, y)->hasEnt()) 
-	      && !(game.getArea()->getTile(x - 1, y)->getWalkable()) )
+	      && !(game.getArea()->getTile(x - 1, y)->isWalkable()) )
 	    ent_list[0]->move(MOVE_LEFT);
+
+	  if (area->getTile(x - 1, y)->hasDoor())
+	  {
+	    std::cout << "This door is locked." << std::endl;
+	  }
 	  break;
 
 	case SDLK_RIGHT:
 	  if (!(area->getTile(x + 1, y)->getSolid())
 	      && !(game.getArea()->getTile(x + 1, y)->hasEnt()) 
-	      && !(game.getArea()->getTile(x + 1, y)->getWalkable()) )
+	      && !(game.getArea()->getTile(x + 1, y)->isWalkable()) )
 	    ent_list[0]->move(MOVE_RIGHT);
+
+	  if (area->getTile(x + 1, y)->hasDoor())
+	  {
+	    std::cout << "This door is locked." << std::endl;
+	  }
 	  break;
 
 	default:

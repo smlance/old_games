@@ -87,9 +87,9 @@ void Tile::setSolidById() /* ??? */
 
 /*
   getSolid is used while the map is being made. Some other "getSolid" (maybe
-  getWalkable?) needs to be made specifically for gameplay.
+  isWalkable?) needs to be made specifically for gameplay.
 
-  getWalkable needs to be called when the Game object is determining whether 
+  isWalkable needs to be called when the Game object is determining whether 
   the player can move to the cell to which he wants to move. (look in game.cpp)
  */
 // bool Tile::getSolid()
@@ -97,7 +97,7 @@ void Tile::setSolidById() /* ??? */
 //   return solid;
 // }
 
-bool Tile::getWalkable()
+bool Tile::isWalkable()
 {
   for (int i = 0; i < entity_list.size(); i++)
   {

@@ -2,11 +2,17 @@ Remember: work on something else if you get stuck. (Just make the door addition 
 
 To Do
 
-- fix buggy room creation
+- fix buggy room creation (can scan over all tiles after map is generated, and then add tiles to ensure that if two adjacent non-room tiles exist, one gets turned into wall)
 
-- prevent entities from going through doors
+- prevent entities from going through doors [DONE]
 
-- implement killing entities and player / entity health
+- player-environment interaction:
+  - logging / messages (e.g., "This door is locked. Press 'o' to open it.")
+  - opening doors
+
+- 
+
+- killing entities and player / entity health (battle, fighting)
 
 - diagonal movement? or too difficult?
 
@@ -98,3 +104,6 @@ Done
 	[o]	Black space (for shading? Check)
 [x]	Core SDL loop
 [x]	Makefile and build script
+
+2013-12-27
+

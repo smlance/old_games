@@ -136,8 +136,9 @@ bool Entity::openDoor(int x, int y)
 
 void Entity::move(int dir)
 {
-  if (solidSpace(x, y))
-    std::cout << "I'm on a solid space!!!" << std::endl;
+/*  if (solidSpace(x, y))
+    std::cout << "I'm on a solid space!!!" << std::endl; // should never happen
+*/
 	// random movement
 	// XXX use DIRECTION MACROs instead?
 	int direction = rand() % 4;
@@ -156,22 +157,22 @@ void Entity::move(int dir)
 	if (direction == 0 && !(solidSpace(x+1, y))
 		&& !(game.getArea()->getTile(x + 1, y)->hasEnt())
 		&& (game.getArea()->getTile(x + 1, y)->getPEO() < 2) 
-	    && !(game.getArea()->getTile(x + 1, y)->getWalkable()) )
+	    && !(game.getArea()->getTile(x + 1, y)->isWalkable()) )
 		x += 1;
 	else if (direction == 1 && !(solidSpace(x-1, y))
 		&& !(game.getArea()->getTile(x - 1, y)->hasEnt())
 		&& (game.getArea()->getTile(x - 1, y)->getPEO() < 2)
-		 && !(game.getArea()->getTile(x - 1, y)->getWalkable()) )
+		 && !(game.getArea()->getTile(x - 1, y)->isWalkable()) )
 		x -= 1;
 	else if (direction == 2 && !(solidSpace(x,y+1))
 		&& !(game.getArea()->getTile(x, y + 1)->hasEnt())
 		&& (game.getArea()->getTile(x, y + 1)->getPEO() < 2) 
-	  	      && !(game.getArea()->getTile(x, y + 1)->getWalkable()) )
+	  	      && !(game.getArea()->getTile(x, y + 1)->isWalkable()) )
 		y += 1;
 	else if (direction == 3 && !(solidSpace(x,y-1))
 		&& !(game.getArea()->getTile(x, y - 1)->hasEnt())
 		&& (game.getArea()->getTile(x, y - 1)->getPEO() < 2) 
-		 && !(game.getArea()->getTile(x, y - 1)->getWalkable()) )
+		 && !(game.getArea()->getTile(x, y - 1)->isWalkable()) )
 		y -= 1;
 	
 	if (old_x != x || old_y != y)
@@ -181,6 +182,7 @@ void Entity::move(int dir)
 void Entity::moveEnt(int new_x, int new_y)
 {
 	game.getArea()->getTile(new_x, new_y)->addEntity(this);
+	/* And remove entity from old tile if we have direction? */
 }
 
 void Entity::randSpawn()

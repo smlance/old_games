@@ -87,7 +87,7 @@ public:
   Entity *getEnt(int);
   bool 	hasEnt();
 //  bool getSolid();
-  bool getWalkable();
+  bool isWalkable();
   void 	removeEnt(int);
   void	freeEnt();
   int 	getEntListSize();
