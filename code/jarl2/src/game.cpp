@@ -111,10 +111,14 @@ void Game::checkPlayerMove(Key key)
 	 */
 	switch (key)
 	{
+
+	  /* All of these conditionals should be placed in one method that
+	     accepts (int x, int y) as args... ideally, the player and the other
+	     entities should use similar if not the same methods for movement */
 	case SDLK_UP:
 	  if (!(area->getTile(x, y - 1)->getSolid())
 	      && !(game.getArea()->getTile(x, y - 1)->hasEnt()) 
-	      && !(game.getArea()->getTile(x, y - 1)->getWalkable()) )
+	       && !(game.getArea()->getTile(x, y - 1)->getWalkable()) )
 	    /* For making sure an entity doesn't walk into a door; same below */
 	    ent_list[0]->move(MOVE_UP);
 	  break;
