@@ -25,9 +25,11 @@ public:
   int 	getID();
   int 	getX();
   int 	getY();
-  /*int		getHP();
+  /*
+    int		getHP();
     int		getAtk();
-    int		getDef();*/
+    int		getDef();
+  */
   virtual bool	getSolid();
   bool	getInRoom();
   bool solidSpace(int, int);
@@ -84,7 +86,8 @@ public:
   int		getPEO();
   Entity *getEnt(int);
   bool 	hasEnt();
-  bool getSolid();
+//  bool getSolid();
+  bool isWalkable();
   void 	removeEnt(int);
   void	freeEnt();
   int 	getEntListSize();

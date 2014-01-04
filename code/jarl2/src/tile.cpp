@@ -99,15 +99,21 @@ void Tile::setSolidById() /* ??? */
 
 bool Tile::isWalkable()
 {
+
+  /*
+    Should we also cover the solidSpace() check here? (We can't walk on solid
+    spaces, after all...)
+   */
+
   for (int i = 0; i < entity_list.size(); i++)
   {
     if (entity_list[i])
     {
-      if (entity_list[i]->getSolid() == true) return true;
+      if (entity_list[i]->getSolid() == true) return false;
     }
   }
 
-  return false;
+  return true;
 }
 
 Entity *Tile::getEnt(int pos)

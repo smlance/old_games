@@ -64,7 +64,7 @@ void Tile::setID(int id_)
 	setSolidById();
 }
 
-void Tile::setSolidById()
+void Tile::setSolidById() /* ??? */
 {
 	switch (id)
 	{
@@ -83,6 +83,31 @@ void Tile::setSolidById()
 	default:
 		break;
 	}
+}
+
+/*
+  getSolid is used while the map is being made. Some other "getSolid" (maybe
+  isWalkable?) needs to be made specifically for gameplay.
+
+  isWalkable needs to be called when the Game object is determining whether 
+  the player can move to the cell to which he wants to move. (look in game.cpp)
+ */
+// bool Tile::getSolid()
+// {
+//   return solid;
+// }
+
+bool Tile::isWalkable()
+{
+  for (int i = 0; i < entity_list.size(); i++)
+  {
+    if (entity_list[i])
+    {
+      if (entity_list[i]->getSolid() == true) return true;
+    }
+  }
+
+  return false;
 }
 
 Entity *Tile::getEnt(int pos)
@@ -120,9 +145,7 @@ void Tile::addEntity(Entity *ent)
 		if (!(entity_list[i]))
 		{
 			entity_list[i] = ent;
-		// break loop
-		i = entity_list.size();
-		/* XXX does the break need to be in the "if" brackets? */
+			i = entity_list.size();
 		}
 	}
 }

@@ -136,11 +136,8 @@ bool Entity::openDoor(int x, int y)
 
 void Entity::move(int dir)
 {
-/*  if (solidSpace(x, y))
-    std::cout << "I'm on a solid space!!!" << std::endl; // should never happen
-*/
 	// random movement
-	// XXX use DIRECTION MACROs instead?
+	// use direction macros instead?
 	int direction = rand() % 4;
 	int old_x = x;
 	int old_y = y;
@@ -153,30 +150,49 @@ void Entity::move(int dir)
 		game.getArea()->getTile(x, y + 1)->incrementPEO();
 	else if (direction == 3)
 		game.getArea()->getTile(x, y - 1)->incrementPEO();
-	/* maybe separate these two parts? */
-	if (direction == 0 && !(solidSpace(x+1, y))
-		&& !(game.getArea()->getTile(x + 1, y)->hasEnt())
-		&& (game.getArea()->getTile(x + 1, y)->getPEO() < 2) 
-	    && !(game.getArea()->getTile(x + 1, y)->isWalkable()) )
-		x += 1;
-	else if (direction == 1 && !(solidSpace(x-1, y))
-		&& !(game.getArea()->getTile(x - 1, y)->hasEnt())
-		&& (game.getArea()->getTile(x - 1, y)->getPEO() < 2)
-		 && !(game.getArea()->getTile(x - 1, y)->isWalkable()) )
-		x -= 1;
-	else if (direction == 2 && !(solidSpace(x,y+1))
-		&& !(game.getArea()->getTile(x, y + 1)->hasEnt())
-		&& (game.getArea()->getTile(x, y + 1)->getPEO() < 2) 
-	  	      && !(game.getArea()->getTile(x, y + 1)->isWalkable()) )
-		y += 1;
-	else if (direction == 3 && !(solidSpace(x,y-1))
-		&& !(game.getArea()->getTile(x, y - 1)->hasEnt())
-		&& (game.getArea()->getTile(x, y - 1)->getPEO() < 2) 
-		 && !(game.getArea()->getTile(x, y - 1)->isWalkable()) )
-		y -= 1;
+
+	updatePosition(direction);
 	
 	if (old_x != x || old_y != y)
-		moveEnt(x, y);
+	{
+	  moveEnt(x, y);
+	}
+}
+
+void Entity::updatePosition(int dir)
+{
+
+  int i = 0, j = 0;
+
+  switch (dir) {
+  case 0:
+    i = 1;
+    break;
+
+  case 1:
+    i = -1;
+    break;
+
+  case 2:
+    j = 1;
+    break;
+
+  case 3:
+    j = -1;
+    break;
+  }
+
+  if ( !(solidSpace(x + i, y + j)) // solidSpace is not covered in isWalkable
+//       && !(game.getArea()->getTile(x + i, y + j)->hasEnt()) // Covered in isWalkable
+       && (game.getArea()->getTile(x + i, y + j)->getPEO() < 2) 
+       && (game.getArea()->getTile(x + i, y + j)->isWalkable()) )
+  {
+    x += i;
+    y += j;
+  }
+
+  
+  
 }
 
 void Entity::moveEnt(int new_x, int new_y)

@@ -43,6 +43,7 @@ public:
   void			setSolid(bool);
   void			setInRoom(bool);
   void			setStatsById(int, int, int);
+  void updatePosition(int);
   /* TODO: make a struct or a class that can grab the stats just by looking at the ID, so you avoid this function... or make g/setting easier */
   //void			setVisible(bool);
 };
