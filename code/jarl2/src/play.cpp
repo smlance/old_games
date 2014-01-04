@@ -31,49 +31,60 @@ void Player::update(int time)
 
 void Player::move(int direction)
 {
-  /* This method assumes no tile is hindering our movement. */
+  /* This method assumes there is no tile in our way. */
 	int old_x = x;
 	int old_y = y;
 	/* put these move function checks into a single function for all entities */
-	if (direction == MOVE_RIGHT)
-		game.getArea()->getTile(x + 1, y)->incrementPEO();
-	else if (direction == MOVE_LEFT)
-		game.getArea()->getTile(x - 1, y)->incrementPEO();
-		/* REMEMBER XXX: y UP is -; y DOWN is + XXX */
-	else if (direction == MOVE_UP)
-		game.getArea()->getTile(x, y - 1)->incrementPEO();
-	else if (direction == MOVE_DOWN)
-		game.getArea()->getTile(x, y + 1)->incrementPEO();
-		
+
 	switch (direction)
 	{
 	case MOVE_UP:
-		if ( !(game.getArea()->getTile(x, y - 1)->hasEnt())
-		&& (game.getArea()->getTile(x, y - 1)->getPEO() < 2) )
-			y--;
-		break;
+
+	  game.getArea()->getTile(x, y - 1)->incrementPEO();
+
+	  if ( !(game.getArea()->getTile(x, y - 1)->hasEnt())
+	       && (game.getArea()->getTile(x, y - 1)->getPEO() < 2) )
+	    y--;
+	  break;
+
 	case MOVE_DOWN:
-		if ( !(game.getArea()->getTile(x, y + 1)->hasEnt())
-		&& (game.getArea()->getTile(x, y + 1)->getPEO() < 2) )
-			y++;
-		break;
+
+	  game.getArea()->getTile(x, y + 1)->incrementPEO();
+
+	  if ( !(game.getArea()->getTile(x, y + 1)->hasEnt())
+	       && (game.getArea()->getTile(x, y + 1)->getPEO() < 2) )
+	    y++;
+	  break;
+
 	case MOVE_LEFT:
-		if ( !(game.getArea()->getTile(x - 1, y)->hasEnt())
-		&& (game.getArea()->getTile(x - 1, y)->getPEO() < 2) )
-			x--;
-		break;
+
+	  game.getArea()->getTile(x - 1, y)->incrementPEO();
+
+	  if ( !(game.getArea()->getTile(x - 1, y)->hasEnt())
+	       && (game.getArea()->getTile(x - 1, y)->getPEO() < 2) )
+	    x--;
+	  break;
+
 	case MOVE_RIGHT:
-		if ( !(game.getArea()->getTile(x + 1, y)->hasEnt())
-		&& (game.getArea()->getTile(x + 1, y)->getPEO() < 2) )
-			x++;
-		break;
+
+	  game.getArea()->getTile(x + 1, y)->incrementPEO();
+
+	  if ( !(game.getArea()->getTile(x + 1, y)->hasEnt())
+	       && (game.getArea()->getTile(x + 1, y)->getPEO() < 2) )
+	    x++;
+	  break;
+
 	default:
-		break;
+	  break;
+
 	}
 	
 	if (old_x != x || old_y != y)
-		moveEnt(x, y);
-		game.getArea()->getTile(old_x, old_y)->freeEnt();
+	{
+	  moveEnt(x, y);
+	}
+
+	game.getArea()->getTile(old_x, old_y)->freeEnt();
 }
 
 void Player::randSpawn()

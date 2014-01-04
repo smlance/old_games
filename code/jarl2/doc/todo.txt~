@@ -2,18 +2,37 @@ Remember: work on something else if you get stuck. (Just make the door addition 
 
 To Do
 
-- implement killing entities and player / entity health
+- fix buggy room creation (can scan over all tiles after map is generated, and then add tiles to ensure that if two adjacent non-room tiles exist, one gets turned into wall)
+
+- prevent entities from going through doors [DONE]
+
+- player-environment interaction:
+  - logging / messages (e.g., "This door is locked. Press 'o' to open it.")
+  - opening doors
+
+- 
+
+- killing entities and player / entity health (battle, fighting)
+
 - diagonal movement? or too difficult?
+
 - variable text rendering system with newlines, etc.
+
 - create a log system...
 
 - go back to using SDL and appropriate namespace tokens
+
 - implement LOS (and eventually make it shadowy)
 	-> implement shadowy LOS with black for where haven't been and fog of war for where have been.
-- fix disappearing door problem with entities stepping over doors
+
+- fix disappearing door problem with entities stepping over doors [DONE?]
+
 - fix any memory problems / make sure it doesn't use too much memory, etc.
+
 - maybe make each tile space have a "walkable" quality, instead of / in addition to a "solid" quality? (e.g., a stair is steppable by the character but not by entities)
+
 - instead of coding each entity individually, look at main.h lines 67-70 -- should put in place a system that can use these type IDs to make decisions about solidity, etc.
+
 - check for future position of entity so collision preventions can actually work?
 
 Soon
@@ -85,3 +104,6 @@ Done
 	[o]	Black space (for shading? Check)
 [x]	Core SDL loop
 [x]	Makefile and build script
+
+2013-12-27
+

@@ -182,16 +182,13 @@ void Entity::updatePosition(int dir)
     break;
   }
 
-  if ( !(solidSpace(x + i, y + j)) // solidSpace is not covered in isWalkable
-//       && !(game.getArea()->getTile(x + i, y + j)->hasEnt()) // Covered in isWalkable
+  if ( !(solidSpace(x + i, y + j))
        && (game.getArea()->getTile(x + i, y + j)->getPEO() < 2) 
        && (game.getArea()->getTile(x + i, y + j)->isWalkable()) )
   {
     x += i;
     y += j;
   }
-
-  
   
 }
 

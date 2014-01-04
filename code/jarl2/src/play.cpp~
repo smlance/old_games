@@ -31,6 +31,7 @@ void Player::update(int time)
 
 void Player::move(int direction)
 {
+  /* This method assumes no tile is hindering our movement. */
 	int old_x = x;
 	int old_y = y;
 	/* put these move function checks into a single function for all entities */

@@ -4,6 +4,8 @@ To Do
 
 - fix buggy room creation (can scan over all tiles after map is generated, and then add tiles to ensure that if two adjacent non-room tiles exist, one gets turned into wall)
 
+- make left and right movement integers the same for entities and the player
+
 - prevent entities from going through doors [DONE]
 
 - player-environment interaction:
